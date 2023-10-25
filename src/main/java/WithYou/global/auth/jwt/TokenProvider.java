@@ -31,9 +31,9 @@ public class TokenProvider {
 	private final Long refreshTokenValidTime = 1000 * 60 * 60 * 24 * 7L; // 1주
 
 	//AccessToken 생성
-	public String createAccessToken(String snsId) {
+	public String createAccessToken(String id) {
 		Claims claims = Jwts.claims().setSubject("accessToken");
-		claims.put("snsId", snsId);
+		claims.put("id", id);
 		Date currentTime = new Date();
 
 		return Jwts.builder()
@@ -45,9 +45,9 @@ public class TokenProvider {
 	}
 
 	//RefreshToken 생성
-	public String createRefreshToken(String snsId) {
+	public String createRefreshToken(String id) {
 		Claims claims = Jwts.claims().setSubject("refreshToken");
-		claims.put("snsId", snsId);
+		claims.put("id", id);
 		Date currentTime = new Date();
 
 		return Jwts.builder()
@@ -79,21 +79,21 @@ public class TokenProvider {
 	//User의 정보를 가져온다.
 	public UsernamePasswordAuthenticationToken getAuthentication(String token) {
 		//@AuthenticationPrincipal에서 필요한 정보 여기에 담기
-		String snsId = getsnsIdFromToken(token);
-		Member member = memberRepository.findBySnsId(snsId)
+		String id = getIdFromToken(token);
+		Member member = memberRepository.findById(id)
 			.orElseThrow(() -> new RuntimeException("Member 를 찾지 못했습니다."));
 		MemberPrincipal memberPrincipal = new MemberPrincipal(member);
 		return new UsernamePasswordAuthenticationToken(memberPrincipal, token,
 			member.getAuthorities());
 	}
 
-	//Token으로부터 snsId 추출
-	public String getsnsIdFromToken(String token) {
+	//Token으로부터 Id 추출
+	public String getIdFromToken(String token) {
 		return Jwts.parserBuilder()
 			.setSigningKey(Base64Utils.encodeToString(JWT_SECRET_KEY.getBytes()))
 			.build().parseClaimsJws(token)
 			.getBody()
-			.get("snsId",
+			.get("id",
 				String.class);
 	}
 

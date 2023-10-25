@@ -43,12 +43,12 @@ public class Member extends BaseEntity implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return userPassword;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return nickName;
     }
 
     @Override
