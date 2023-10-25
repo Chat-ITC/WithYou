@@ -1,5 +1,6 @@
 package WithYou.global.common.error;
 
+import WithYou.domain.member.exception.MemberNotFoundException;
 import WithYou.global.auth.exception.TokenDecodeException;
 import WithYou.global.auth.exception.TokenException;
 import WithYou.global.auth.exception.TokenExpiredException;
@@ -33,6 +34,15 @@ public class ControllerAdvice {
     public ResponseEntity<ErrorResponse> handleInternationalServerError(final RuntimeException e) {
         ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(errorResponse);
+    }
+
+    @ExceptionHandler({
+            MemberNotFoundException.class
+    })
+    public ResponseEntity<ErrorResponse> handleNotFound(final RuntimeException e) {
+        ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(errorResponse);
     }
 }

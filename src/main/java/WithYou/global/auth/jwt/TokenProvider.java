@@ -2,6 +2,7 @@ package WithYou.global.auth.jwt;
 
 
 import WithYou.domain.member.entity.Member;
+import WithYou.domain.member.exception.MemberNotFoundException;
 import WithYou.domain.member.repository.MemberRepository;
 import WithYou.global.auth.exception.TokenDecodeException;
 import WithYou.global.auth.exception.TokenException;
@@ -12,7 +13,6 @@ import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
@@ -31,7 +31,7 @@ public class TokenProvider {
 	private final Long refreshTokenValidTime = 1000 * 60 * 60 * 24 * 7L; // 1주
 
 	//AccessToken 생성
-	public String createAccessToken(String id) {
+	public String createAccessToken(Long id) {
 		Claims claims = Jwts.claims().setSubject("accessToken");
 		claims.put("id", id);
 		Date currentTime = new Date();
@@ -45,7 +45,7 @@ public class TokenProvider {
 	}
 
 	//RefreshToken 생성
-	public String createRefreshToken(String id) {
+	public String createRefreshToken(Long id) {
 		Claims claims = Jwts.claims().setSubject("refreshToken");
 		claims.put("id", id);
 		Date currentTime = new Date();
@@ -72,29 +72,29 @@ public class TokenProvider {
 			throw new TokenUnsupportedException();
 		} catch (Exception e) {
 			// 여기에서 예외 메시지를 설정해야 합니다.
-			throw new TokenException("토큰 검증 중에 오류가 발생했습니다.");
+			throw new TokenException();
 		}
 	}
 
 	//User의 정보를 가져온다.
 	public UsernamePasswordAuthenticationToken getAuthentication(String token) {
 		//@AuthenticationPrincipal에서 필요한 정보 여기에 담기
-		String id = getIdFromToken(token);
-		Member member = memberRepository.findById(id)
-			.orElseThrow(() -> new RuntimeException("Member 를 찾지 못했습니다."));
+		Long id = getIdFromToken(token);
+		Member member = memberRepository.findMemberById(id)
+			.orElseThrow(() -> new MemberNotFoundException());
 		MemberPrincipal memberPrincipal = new MemberPrincipal(member);
 		return new UsernamePasswordAuthenticationToken(memberPrincipal, token,
 			member.getAuthorities());
 	}
 
 	//Token으로부터 Id 추출
-	public String getIdFromToken(String token) {
+	public Long getIdFromToken(String token) {
 		return Jwts.parserBuilder()
 			.setSigningKey(Base64Utils.encodeToString(JWT_SECRET_KEY.getBytes()))
 			.build().parseClaimsJws(token)
 			.getBody()
 			.get("id",
-				String.class);
+				Long.class);
 	}
 
 	//Jwt Token의 유효성 검사
