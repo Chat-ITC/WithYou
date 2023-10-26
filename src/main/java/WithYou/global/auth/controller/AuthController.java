@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,12 +19,25 @@ public class AuthController {
 
     @PostMapping("/member/signup")
     public ResponseEntity<String> memberSignup(@RequestBody @Valid MemberSignupDto memberSignupDto) {
-        authService.isUserIdExists(memberSignupDto.getUserId()); // userId 중복 검사
-        authService.isNickNameExists(memberSignupDto.getNickName()); //nickname 중복 검사
         authService.signUp(memberSignupDto);
 
         return ResponseEntity.ok("회원가입을 성공적으로 마쳤습니다.");
     }
+
+    @PostMapping("/member/signup/userId")
+    public ResponseEntity<?> validateUserId(@RequestParam String userId) {
+        authService.isUserIdExists(userId);
+        return ResponseEntity.ok()
+                .body("중복되는 아이디가 없습니다.");
+    }
+
+    @PostMapping("/member/signup/nickName")
+    public ResponseEntity<?> validateNickName(@RequestParam String nickName) {
+        authService.isNickNameExists(nickName);
+        return ResponseEntity.ok()
+                .body("중복되는 닉네임이 없습니다.");
+    }
+
 
     @PostMapping("/member/signin")
     public ResponseEntity<?> memberSignin(@RequestBody @Valid MemberLoginDto memberLoginDto) {
