@@ -1,7 +1,9 @@
 package WithYou.global.common.error;
 
 import WithYou.domain.member.exception.MemberIdDuplicatedException;
+import WithYou.domain.member.exception.MemberIdNotFoundException;
 import WithYou.domain.member.exception.MemberNotFoundException;
+import WithYou.domain.member.exception.MemberPasswordNotFoundException;
 import WithYou.global.auth.exception.TokenDecodeException;
 import WithYou.global.auth.exception.TokenException;
 import WithYou.global.auth.exception.TokenExpiredException;
@@ -40,7 +42,9 @@ public class ControllerAdvice {
     }
 
     @ExceptionHandler({
-            MemberNotFoundException.class
+            MemberNotFoundException.class,
+            MemberIdNotFoundException.class,
+            MemberPasswordNotFoundException.class
     })
     public ResponseEntity<ErrorResponse> handleNotFound(final RuntimeException e) {
         ErrorResponse errorResponse = new ErrorResponse(e.getMessage());

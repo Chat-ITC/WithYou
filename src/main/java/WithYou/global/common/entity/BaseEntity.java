@@ -1,4 +1,4 @@
-package WithYou.global.entity;
+package WithYou.global.common.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.EntityListeners;
