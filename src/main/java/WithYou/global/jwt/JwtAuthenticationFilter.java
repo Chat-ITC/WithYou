@@ -26,7 +26,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         log.info(jwt);
         log.info("jwt 값 출력한거임");
         if (StringUtils.hasText(jwt) && tokenProvider.validateAccessToken(jwt)) {
-            log.info("1");
 //            String isLogout = (String) redisTemplate.opsForValue().get(jwt);
 //            if (ObjectUtils.isEmpty(isLogout)) { // AccessToken 블랙리스트 검사
             log.info("2");
