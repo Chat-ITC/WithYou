@@ -4,7 +4,6 @@ import WithYou.domain.member.entity.Member;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class MemberSignupDto {
@@ -18,8 +17,7 @@ public class MemberSignupDto {
     private String major;
     @NotBlank
     private String nickName;
-    @NotNull
-    private double level;
+
 
     public void setUserPassword(String password) {
         userPassword = password;
@@ -32,7 +30,7 @@ public class MemberSignupDto {
                 .grade(grade)
                 .major(major)
                 .nickName(nickName)
-                .level(level)
+                .level(0.0)
                 .build();
     }
 }

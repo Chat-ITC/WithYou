@@ -19,6 +19,7 @@ public class AuthController {
 
     @PostMapping("/member/signup")
     public ResponseEntity<String> memberSignup(@RequestBody @Valid MemberSignupDto memberSignupDto) {
+        authService.isNickNameExists(memberSignupDto.getNickName());
         authService.signUp(memberSignupDto);
 
         return ResponseEntity.ok("회원가입을 성공적으로 마쳤습니다.");
@@ -29,13 +30,6 @@ public class AuthController {
         authService.isUserIdExists(userId);
         return ResponseEntity.ok()
                 .body("중복되는 아이디가 없습니다.");
-    }
-
-    @PostMapping("/member/signup/nickName")
-    public ResponseEntity<?> validateNickName(@RequestParam String nickName) {
-        authService.isNickNameExists(nickName);
-        return ResponseEntity.ok()
-                .body("중복되는 닉네임이 없습니다.");
     }
 
 
