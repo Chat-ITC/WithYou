@@ -8,10 +8,14 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
         show_sql: true
+  redis:
+    host: sm-redis.qs6a13.clustercfg.apn2.cache.amazonaws.com
+    port: 6379
 
-JWT_SECRET_KEY: hellohellohellohellohellodkfljaksdjfkldsajlkf
+
+JWT_SECRET_KEY: imissyouannawhereareyouloveyamissyaseeyoutomorrow
