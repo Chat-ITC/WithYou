@@ -55,7 +55,7 @@ public class SecuritiyConfig {
                 .addFilterBefore(new JwtAuthenticationFilter(tokenProvider, redisTemplate),
                         UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/member/signup", "/member/signin").permitAll()
+                .antMatchers("/member/signup/**", "/member/signin/**").permitAll()
                 .anyRequest().authenticated();
 
         return http.build();
