@@ -18,6 +18,7 @@ public class AuthController {
     @PostMapping("/member/signup")
     public ResponseEntity<String> memberSignup(@RequestBody @Valid MemberSignupDto memberSignupDto) {
         authService.isUserIdExists(memberSignupDto.getUserId()); // userId 중복 검사
+        authService.isNickNameExists(memberSignupDto.getNickName()); //nickname 중복 검사
         authService.signUp(memberSignupDto);
 
         return ResponseEntity.ok("회원가입을 성공적으로 마쳤습니다.");

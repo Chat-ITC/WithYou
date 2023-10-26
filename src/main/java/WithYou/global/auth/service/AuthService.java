@@ -1,5 +1,6 @@
 package WithYou.global.auth.service;
 
+import WithYou.domain.member.exception.MemberNickNameDulicatedException;
 import WithYou.global.auth.dto.MemberLoginDto;
 import WithYou.global.auth.dto.MemberSignupDto;
 import WithYou.domain.member.entity.Member;
@@ -24,6 +25,13 @@ public class AuthService {
         Optional<Member> member = memberRepository.findMemberByUserId(userId);
         if (member.isPresent()) {
             throw new MemberIdDuplicatedException();
+        }
+    }
+
+    public void isNickNameExists(String nickName) {
+        Optional<Member> member = memberRepository.findMemberByNickName(nickName);
+        if (member.isPresent()) {
+            throw new MemberNickNameDulicatedException();
         }
     }
 

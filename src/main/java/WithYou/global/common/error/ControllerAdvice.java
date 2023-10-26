@@ -2,6 +2,7 @@ package WithYou.global.common.error;
 
 import WithYou.domain.member.exception.MemberIdDuplicatedException;
 import WithYou.domain.member.exception.MemberIdNotFoundException;
+import WithYou.domain.member.exception.MemberNickNameDulicatedException;
 import WithYou.domain.member.exception.MemberNotFoundException;
 import WithYou.domain.member.exception.MemberPasswordNotFoundException;
 import WithYou.global.auth.exception.TokenDecodeException;
@@ -26,7 +27,8 @@ public class ControllerAdvice {
     @ExceptionHandler({
             TokenUnsupportedException.class,
             TokenDecodeException.class,
-            MemberIdDuplicatedException.class
+            MemberIdDuplicatedException.class,
+            MemberNickNameDulicatedException.class
     })
     public ResponseEntity<ErrorResponse> handleBadRequest(final RuntimeException e) {
         ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
