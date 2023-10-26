@@ -1,18 +1,18 @@
 package WithYou.global.config;
 
-import WithYou.global.auth.jwt.JwtAccessDeniedHandler;
-import WithYou.global.auth.jwt.JwtAuthenticationEntryPoint;
-import WithYou.global.auth.jwt.JwtAuthenticationFilter;
-import WithYou.global.auth.jwt.TokenProvider;
+import WithYou.global.jwt.JwtAccessDeniedHandler;
+import WithYou.global.jwt.JwtAuthenticationEntryPoint;
+import WithYou.global.jwt.JwtAuthenticationFilter;
+import WithYou.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -21,6 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @RequiredArgsConstructor
+@EnableJpaAuditing
 public class SecuritiyConfig {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -54,7 +55,7 @@ public class SecuritiyConfig {
                 .addFilterBefore(new JwtAuthenticationFilter(tokenProvider, redisTemplate),
                         UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers().permitAll();
+                .antMatchers("/**").permitAll();
 
         return http.build();
     }

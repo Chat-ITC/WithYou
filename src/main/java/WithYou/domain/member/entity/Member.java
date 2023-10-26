@@ -25,17 +25,11 @@ public class Member extends BaseEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private String userId;
-    @Column
     private String userPassword;
-    @Column
     private String nickName;
-    @Column
     private String major;
-    @Column
-    private String grade;
-    @Column
+    private int grade;
     private double level;
 
     @Override
@@ -50,7 +44,7 @@ public class Member extends BaseEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return nickName;
+        return userId;
     }
 
     @Override

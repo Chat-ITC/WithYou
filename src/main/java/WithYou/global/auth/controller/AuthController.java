@@ -1,9 +1,8 @@
 package WithYou.global.auth.controller;
 
-import WithYou.domain.member.dto.request.MemberLoginDto;
-import WithYou.domain.member.dto.request.MemberSignupDto;
+import WithYou.global.auth.dto.MemberLoginDto;
+import WithYou.global.auth.dto.MemberSignupDto;
 import WithYou.domain.member.entity.Member;
-import WithYou.domain.member.service.MemberService;
 import WithYou.global.auth.service.AuthService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,8 @@
-package WithYou.domain.member.dto.request;
+package WithYou.global.auth.dto;
 
 import WithYou.domain.member.entity.Member;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,12 +12,14 @@ public class MemberSignupDto {
     private String userId;
     @NotBlank
     private String userPassword;
-    @NotBlank
-    private String grade;
+    @NotNull
+    private int grade;
     @NotBlank
     private String major;
     @NotBlank
     private String nickName;
+    @NotNull
+    private double level;
 
     public void setUserPassword(String password) {
         userPassword = password;
@@ -29,6 +32,7 @@ public class MemberSignupDto {
                 .grade(grade)
                 .major(major)
                 .nickName(nickName)
+                .level(level)
                 .build();
     }
 }

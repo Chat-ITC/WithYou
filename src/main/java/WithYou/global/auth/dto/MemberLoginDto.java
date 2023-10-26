@@ -1,4 +1,4 @@
-package WithYou.domain.member.dto.request;
+package WithYou.global.auth.dto;
 
 import javax.validation.constraints.NotBlank;
 import lombok.Getter;

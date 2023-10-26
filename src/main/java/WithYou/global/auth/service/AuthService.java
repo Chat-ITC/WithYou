@@ -1,13 +1,13 @@
 package WithYou.global.auth.service;
 
-import WithYou.domain.member.dto.request.MemberLoginDto;
-import WithYou.domain.member.dto.request.MemberSignupDto;
+import WithYou.global.auth.dto.MemberLoginDto;
+import WithYou.global.auth.dto.MemberSignupDto;
 import WithYou.domain.member.entity.Member;
 import WithYou.domain.member.exception.MemberIdDuplicatedException;
 import WithYou.domain.member.exception.MemberIdNotFoundException;
 import WithYou.domain.member.exception.MemberPasswordNotFoundException;
 import WithYou.domain.member.repository.MemberRepository;
-import WithYou.global.auth.jwt.TokenProvider;
+import WithYou.global.jwt.TokenProvider;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

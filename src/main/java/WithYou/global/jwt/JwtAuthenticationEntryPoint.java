@@ -1,4 +1,4 @@
-package WithYou.global.auth.jwt;
+package WithYou.global.jwt;
 
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;

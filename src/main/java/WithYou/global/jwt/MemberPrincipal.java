@@ -1,4 +1,4 @@
-package WithYou.global.auth.jwt;
+package WithYou.global.jwt;
 
 import WithYou.domain.member.entity.Member;
 import java.io.Serializable;
