@@ -1,19 +1,20 @@
 package WithYou.global.auth.service;
 
-import WithYou.domain.member.exception.MemberNickNameDulicatedException;
-import WithYou.global.auth.dto.MemberLoginDto;
-import WithYou.global.auth.dto.MemberSignupDto;
 import WithYou.domain.member.entity.Member;
 import WithYou.domain.member.exception.MemberIdDuplicatedException;
 import WithYou.domain.member.exception.MemberIdNotFoundException;
+import WithYou.domain.member.exception.MemberNickNameDulicatedException;
 import WithYou.domain.member.exception.MemberPasswordNotFoundException;
 import WithYou.domain.member.repository.MemberRepository;
+import WithYou.global.auth.dto.MemberLoginDto;
+import WithYou.global.auth.dto.MemberSignupDto;
 import WithYou.global.jwt.TokenProvider;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -60,6 +61,7 @@ public class AuthService {
         }
         return member;
     }
+
     public String createAccessToken(Long id) {
         String accessToken = tokenProvider.createAccessToken(id);
         return accessToken;

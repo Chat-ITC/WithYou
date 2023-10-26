@@ -1,6 +1,6 @@
 package WithYou.domain.member.exception;
 
-public class MemberPasswordNotFoundException extends RuntimeException{
+public class MemberPasswordNotFoundException extends RuntimeException {
     public MemberPasswordNotFoundException(final String message) {
         super(message);
     }

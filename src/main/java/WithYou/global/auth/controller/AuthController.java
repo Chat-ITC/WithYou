@@ -1,8 +1,8 @@
 package WithYou.global.auth.controller;
 
+import WithYou.domain.member.entity.Member;
 import WithYou.global.auth.dto.MemberLoginDto;
 import WithYou.global.auth.dto.MemberSignupDto;
-import WithYou.domain.member.entity.Member;
 import WithYou.global.auth.service.AuthService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
+
     @PostMapping("/member/signup")
     public ResponseEntity<String> memberSignup(@RequestBody @Valid MemberSignupDto memberSignupDto) {
         authService.isUserIdExists(memberSignupDto.getUserId()); // userId 중복 검사
