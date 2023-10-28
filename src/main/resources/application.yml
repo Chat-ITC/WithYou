@@ -1,21 +1,3 @@
 spring:
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/~/test
-    username: sa
-    password:
-
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        format_sql: true
-        show_sql: true
-  redis:
-    host: sm-redis.qs6a13.clustercfg.apn2.cache.amazonaws.com
-    port: 6379
-
-
-JWT_SECRET_KEY: imissyouannawhereareyouloveyamissyaseeyoutomorrow
+  profiles:
+    active: dev
