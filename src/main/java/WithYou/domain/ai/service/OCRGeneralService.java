@@ -1,5 +1,6 @@
-package WithYou.domain.ai.ocr;
+package WithYou.domain.ai.service;
 
+import WithYou.domain.ai.exception.ResultNotFoundException;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -125,7 +126,7 @@ public class OCRGeneralService {
 
     private String extractInferText(String response) {
         List<String> result = new ArrayList<>();
-        String Str_result;
+        String StrResult;
 
         JSONObject jobj = new JSONObject(response);
         JSONArray imagesArray = jobj.getJSONArray("images");
@@ -140,7 +141,13 @@ public class OCRGeneralService {
                 result.add(inferText);
             }
         }
-        Str_result = result.toString().replaceAll(",", "").replace("[", "").replace("]", "");
-        return Str_result;
+        StrResult = result.toString().replaceAll(",", "").replace("[", "").replace("]", "");
+        return StrResult;
+    }
+
+    public void checkStringExist(String strResult) {
+        if (strResult.isEmpty()) {
+            throw new ResultNotFoundException();
+        }
     }
 }

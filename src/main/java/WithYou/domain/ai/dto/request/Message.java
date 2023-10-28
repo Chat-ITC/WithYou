@@ -1,4 +1,4 @@
-package WithYou.domain.ai.chatGpt.dto;
+package WithYou.domain.ai.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

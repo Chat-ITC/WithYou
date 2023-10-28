@@ -1,6 +1,5 @@
-package WithYou.domain.ai.chatGpt.dto.request;
+package WithYou.domain.ai.dto.request;
 
-import WithYou.domain.ai.chatGpt.dto.Message;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;

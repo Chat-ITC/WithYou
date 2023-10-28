@@ -1,9 +1,9 @@
-package WithYou.domain.ai.chatGpt.service;
+package WithYou.domain.ai.service;
 
-import WithYou.domain.ai.chatGpt.dto.Message;
-import WithYou.domain.ai.chatGpt.dto.request.ChatGptRequestDto;
-import WithYou.domain.ai.chatGpt.dto.response.ChatGptChoiceResponseDto;
-import WithYou.domain.ai.chatGpt.dto.response.ChatGptResponseDto;
+import WithYou.domain.ai.dto.request.ChatGptRequestDto;
+import WithYou.domain.ai.dto.request.Message;
+import WithYou.domain.ai.dto.response.ChatGptChoiceResponseDto;
+import WithYou.domain.ai.dto.response.ChatGptResponseDto;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;

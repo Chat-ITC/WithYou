@@ -1,6 +1,6 @@
-package WithYou.domain.ai.chatGpt.dto.response;
+package WithYou.domain.ai.dto.response;
 
-import WithYou.domain.ai.chatGpt.dto.Message;
+import WithYou.domain.ai.dto.request.Message;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

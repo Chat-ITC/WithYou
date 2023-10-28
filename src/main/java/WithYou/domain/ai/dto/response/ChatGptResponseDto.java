@@ -1,4 +1,4 @@
-package WithYou.domain.ai.chatGpt.dto.response;
+package WithYou.domain.ai.dto.response;
 
 import java.util.List;
 import lombok.AllArgsConstructor;

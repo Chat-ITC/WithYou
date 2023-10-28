@@ -1,5 +1,6 @@
 package WithYou.global.common.error;
 
+import WithYou.domain.ai.exception.ResultNotFoundException;
 import WithYou.domain.member.exception.MemberIdDuplicatedException;
 import WithYou.domain.member.exception.MemberIdNotFoundException;
 import WithYou.domain.member.exception.MemberNickNameDulicatedException;
@@ -46,7 +47,8 @@ public class ControllerAdvice {
     @ExceptionHandler({
             MemberNotFoundException.class,
             MemberIdNotFoundException.class,
-            MemberPasswordNotFoundException.class
+            MemberPasswordNotFoundException.class,
+            ResultNotFoundException.class
     })
     public ResponseEntity<ErrorResponse> handleNotFound(final RuntimeException e) {
         ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
