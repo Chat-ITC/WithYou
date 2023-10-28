@@ -33,6 +33,9 @@ public class Member extends BaseEntity implements UserDetails {
     private int grade;
     private double level;
 
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+//    private List<>
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();

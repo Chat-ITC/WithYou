@@ -23,15 +23,6 @@ import org.springframework.stereotype.Service;
 public class OCRGeneralService {
 
     public String processImage(String apiURL, String secretKey, String imageFile) throws IOException {
-        HttpURLConnection con = createConnection(apiURL, secretKey);
-        String postParams = prepareRequestParams();
-        sendRequest(con, postParams, imageFile);
-        String response = getResponse(con);
-        checkStringExist(response);
-        return extractInferText(response);
-    }
-
-    private HttpURLConnection createConnection(String apiURL, String secretKey) throws IOException {
         URL url = new URL(apiURL);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
@@ -39,6 +30,7 @@ public class OCRGeneralService {
         con.setDoInput(true);
         con.setDoOutput(true);
         con.setReadTimeout(30000);
+
         con.setRequestMethod("POST");
 
         String boundary = "----" + UUID.randomUUID().toString().replaceAll("-", "");
@@ -46,10 +38,6 @@ public class OCRGeneralService {
         con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
         con.setRequestProperty("X-OCR-SECRET", secretKey);
 
-        return con;
-    }
-
-    private String prepareRequestParams() {
         JSONObject json = new JSONObject();
         json.put("version", "V2");
         json.put("requestId", UUID.randomUUID().toString());
@@ -64,20 +52,23 @@ public class OCRGeneralService {
 
         json.put("images", images);
 
-        return json.toString();
-    }
+        String postParams = json.toString();
 
-    private void sendRequest(HttpURLConnection con, String postParams, String imageFile) throws IOException {
         con.connect();
-        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-        File file = new File(imageFile);
-        writeMultiPart(wr, postParams, file, "--" + con.getRequestProperty("Content-Type").split("=")[1]);
-        wr.close();
-    }
 
-    private String getResponse(HttpURLConnection con) throws IOException {
-        BufferedReader br;
+        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+
+        long start = System.currentTimeMillis();
+
+        File file = new File(imageFile);
+
+        writeMultiPart(wr, postParams, file, boundary);
+
+        wr.close();
+
         int responseCode = con.getResponseCode();
+
+        BufferedReader br;
 
         if (responseCode == 200) {
             br = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -91,8 +82,12 @@ public class OCRGeneralService {
         while ((inputLine = br.readLine()) != null) {
             responseBuffer.append(inputLine);
         }
+        log.info("4");
+
         br.close();
-        return responseBuffer.toString();
+        log.info(responseBuffer.toString());
+
+        return extractInferText(responseBuffer.toString()).toString();
     }
 
     private void writeMultiPart(OutputStream out, String jsonMessage, File file, String boundary) throws
@@ -131,7 +126,7 @@ public class OCRGeneralService {
 
     private String extractInferText(String response) {
         List<String> result = new ArrayList<>();
-        String StrResult;
+        String Str_result;
 
         JSONObject jobj = new JSONObject(response);
         JSONArray imagesArray = jobj.getJSONArray("images");
@@ -146,8 +141,8 @@ public class OCRGeneralService {
                 result.add(inferText);
             }
         }
-        StrResult = result.toString().replaceAll(",", "").replace("[", "").replace("]", "");
-        return StrResult;
+        Str_result = result.toString().replaceAll(",", "").replace("[", "").replace("]", "");
+        return Str_result;
     }
 
     public void checkStringExist(String strResult) {
