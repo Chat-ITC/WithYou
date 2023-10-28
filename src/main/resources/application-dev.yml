@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:myslq://withyoudatabase.c7d0z1sithsu.ap-northeast-2.rds.amazonaws.com:3306/withyoudatabase
+    username: admin
+    password: naver.com1
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+
+  openai:
+    model: gpt-3.5-turbo
+    api:
+      url: https://api.openai.com/v1/chat/completions
+      api-key: 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
+
+  redis:
+    host: sm-redis.qs6a13.clustercfg.apn2.cache.amazonaws.com
+    port: 6379
+
+
+JWT_SECRET_KEY: imissyouannawhereareyouloveyamissyaseeyoutomorrow
