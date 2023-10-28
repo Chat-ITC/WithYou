@@ -23,4 +23,10 @@ public class ScrapController {
         return ResponseEntity.ok()
                 .body(questionResponseDto.getIsScrap());
     }
+
+//    @GetMapping("/scrap/list")
+//    public ResponseEntity<?> getScrapList(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
+//                                          @PageableDefault(size = 5, direction = Direction.DESC, sort = "lastModifiedDate")
+//                                          Pageable pageable) {
+//    }
 }
