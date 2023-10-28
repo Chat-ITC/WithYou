@@ -1,12 +1,12 @@
 package WithYou.global.common.error;
 
 import WithYou.domain.ai.exception.ResultNotFoundException;
-import WithYou.domain.member.exception.ContentNotFoundException;
 import WithYou.domain.member.exception.MemberIdDuplicatedException;
 import WithYou.domain.member.exception.MemberIdNotFoundException;
 import WithYou.domain.member.exception.MemberNickNameDulicatedException;
 import WithYou.domain.member.exception.MemberNotFoundException;
 import WithYou.domain.member.exception.MemberPasswordNotFoundException;
+import WithYou.domain.scrap.exception.ContentNotFoundException;
 import WithYou.global.auth.exception.TokenDecodeException;
 import WithYou.global.auth.exception.TokenException;
 import WithYou.global.auth.exception.TokenExpiredException;

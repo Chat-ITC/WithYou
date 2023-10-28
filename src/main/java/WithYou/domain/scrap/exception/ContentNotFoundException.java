@@ -1,4 +1,4 @@
-package WithYou.domain.member.exception;
+package WithYou.domain.scrap.exception;
 
 public class ContentNotFoundException extends RuntimeException {
     public ContentNotFoundException(final String message) {
