@@ -7,16 +7,20 @@ import WithYou.domain.ai.service.AiService;
 import WithYou.domain.ai.service.ChatGptService;
 import WithYou.domain.ai.service.OCRGeneralService;
 import WithYou.global.jwt.MemberPrincipal;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class AiController {
     private final OCRGeneralService ocrGeneralService;
     private final ChatGptService chatGptService;
@@ -42,21 +47,28 @@ public class AiController {
             @RequestParam("imageFile") MultipartFile multipartFile,
             @RequestParam("question") String question,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal
-    ) throws IOException {
-        File file = File.createTempFile("temp", null);
-        multipartFile.transferTo(file);
+    ) {
+        try {
+            File file = File.createTempFile("temp", null);
+            multipartFile.transferTo(file);
 
-        String ocrResult = ocrGeneralService.processImage(apiURL, secretKey, file.getPath());
-        ocrGeneralService.checkStringExist(ocrResult);
 
-        QuestionRequestDto questionRequestDto = aiService.makeQuestionRequestDto(ocrResult, question,
-                memberPrincipal.getMember());
+            String ocrResult = ocrGeneralService.processImage(apiURL, secretKey, file.getPath());
+            ocrGeneralService.checkStringExist(ocrResult);
 
-        QuestionResponseDto responseDto = chatGptService.askQuestion(questionRequestDto);
-        aiService.saveSummaryContent(responseDto);
+            QuestionRequestDto questionRequestDto = aiService.makeQuestionRequestDto(ocrResult, question,
+                    memberPrincipal.getMember());
 
-        return ResponseEntity.ok()
-                .body("저장 완료");
+            QuestionResponseDto responseDto = chatGptService.askQuestion(questionRequestDto);
+            aiService.saveSummaryContent(responseDto);
+
+            return ResponseEntity.ok()
+                    .body("저장 완료");
+        } catch (Exception e) {
+            log.error("에러 발생: " + e.getMessage()); // 에러 메시지 출력
+            log.error("스택 트레이스: ", e); // 스택 트레이스 출력
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/ai/list")
