@@ -3,9 +3,11 @@ package WithYou.domain.ai.dto.response;
 import WithYou.domain.ai.entity.AiSummaryContent;
 import WithYou.domain.ai.entity.IsScrap;
 import WithYou.domain.member.entity.Member;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class QuestionResponseDto {
     private Long id;
     private String title;
@@ -34,7 +36,8 @@ public class QuestionResponseDto {
     }
 
     public static QuestionResponseDto of(AiSummaryContent aiSummaryContent) {
-        return new QuestionResponseDto(aiSummaryContent.getTitle(), aiSummaryContent.getContent(),
+        return new QuestionResponseDto(aiSummaryContent.getId(), aiSummaryContent.getTitle(),
+                aiSummaryContent.getContent(),
                 aiSummaryContent.getIsScrap());
     }
 }
