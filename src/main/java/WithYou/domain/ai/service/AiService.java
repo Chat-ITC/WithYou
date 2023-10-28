@@ -47,4 +47,9 @@ public class AiService {
         return aiRepository.findById(id)
                 .orElseThrow(ContentNotFoundException::new);
     }
+
+    public void deleteQuestion(Long id) {
+        AiSummaryContent aiSummaryContent = getQuestion(id);
+        aiRepository.delete(aiSummaryContent);
+    }
 }

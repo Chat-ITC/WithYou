@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,5 +75,12 @@ public class AiController {
         AiSummaryContent aiSummaryContent = aiService.getQuestion(questionId);
         QuestionResponseDto questionResponseDto = QuestionResponseDto.of(aiSummaryContent);
         return ResponseEntity.ok(questionResponseDto);
+    }
+
+    @DeleteMapping("/question/delete")
+    public ResponseEntity<?> deleteQuestion(@RequestParam("id") Long id) {
+        aiService.deleteQuestion(id);
+        return ResponseEntity.ok()
+                .body("삭제 완료");
     }
 }
