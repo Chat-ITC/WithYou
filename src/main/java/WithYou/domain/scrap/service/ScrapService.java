@@ -5,7 +5,7 @@ import WithYou.domain.ai.entity.AiSummaryContent;
 import WithYou.domain.ai.entity.IsScrap;
 import WithYou.domain.ai.repository.AiRepository;
 import WithYou.domain.member.entity.Member;
-import WithYou.domain.member.exception.ContentNotFoundException;
+import WithYou.domain.scrap.exception.ContentNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
