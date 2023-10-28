@@ -1,6 +1,9 @@
 package WithYou.domain.ai.controller;
 
+import WithYou.domain.ai.dto.request.ImageQuestionRequestDTO;
 import WithYou.domain.ai.dto.request.QuestionRequestDto;
+import WithYou.domain.ai.dto.response.QuestionResponseDto;
+import WithYou.domain.ai.service.AiService;
 import WithYou.domain.ai.service.ChatGptService;
 import WithYou.domain.ai.service.OCRGeneralService;
 import WithYou.global.jwt.MemberPrincipal;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AiController {
     private final OCRGeneralService ocrGeneralService;
     private final ChatGptService chatGptService;
+    private final AiService aiService;
 
     @Value("${spring.ocr.url}")
     String apiURL;
@@ -28,15 +32,21 @@ public class AiController {
 
     @PostMapping("/ai/question")
     public ResponseEntity<?> askQuestionToChatGpt(
-            @RequestBody @Valid QuestionRequestDto question,
+            @RequestBody @Valid ImageQuestionRequestDTO question,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal
     ) throws IOException {
         File file = File.createTempFile("temp", null);
         question.getImageFile().transferTo(file);
 
-        String ocr_result = ocrGeneralService.processImage(apiURL, secretKey, file.getPath());
-        ocrGeneralService.checkStringExist(ocr_result);
+        String ocrResult = ocrGeneralService.processImage(apiURL, secretKey, file.getPath());
+        ocrGeneralService.checkStringExist(ocrResult);
 
+        QuestionRequestDto questionRequestDto = aiService.makeQuestionRequestDto(ocrResult, question.getQuestion(),
+                memberPrincipal.getMember());
+        QuestionResponseDto responseDto = chatGptService.askQuestion(questionRequestDto);
+        aiService.saveSummaryContent(responseDto);
 
+        return ResponseEntity.ok()
+                .body("저장 완료");
     }
 }

@@ -1,16 +1,17 @@
 package WithYou.domain.ai.dto.request;
 
-import javax.validation.constraints.NotBlank;
+import WithYou.domain.member.entity.Member;
 import lombok.Getter;
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 public class QuestionRequestDto {
-    private MultipartFile imageFile;
-    @NotBlank
+    private String ocrResult;
     private String question;
-    @NotBlank
     private String major;
-    @NotBlank
-    private String grade;
+
+    public QuestionRequestDto(String ocrResult, String question, Member member) {
+        this.ocrResult = ocrResult;
+        this.question = question;
+        this.major = member.getMajor();
+    }
 }
