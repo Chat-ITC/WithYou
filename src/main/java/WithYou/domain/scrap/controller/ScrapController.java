@@ -1,12 +1,19 @@
 package WithYou.domain.scrap.controller;
 
 import WithYou.domain.ai.dto.response.QuestionResponseDto;
+import WithYou.domain.ai.entity.AiSummaryContent;
 import WithYou.domain.scrap.service.ScrapService;
 import WithYou.global.jwt.MemberPrincipal;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,9 +33,14 @@ public class ScrapController {
                 .body(questionResponseDto.getIsScrap());
     }
 
-//    @GetMapping("/scrap/list")
-//    public ResponseEntity<?> getScrapList(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
-//                                          @PageableDefault(size = 5, direction = Direction.DESC, sort = "lastModifiedDate")
-//                                          Pageable pageable) {
-//    }
+    @GetMapping("/scrap/list")
+    public ResponseEntity<?> getScrapList(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
+                                          @PageableDefault(size = 5, direction = Direction.DESC, sort = "lastModifiedDate")
+                                          Pageable pageable) {
+        Page<AiSummaryContent> aiSummaryContents = scrapService.findScrapContentList(pageable,
+                memberPrincipal.getMember());
+        List<QuestionResponseDto> responseDtoList = scrapService.changeToQuestionReponseList(aiSummaryContents);
+        return ResponseEntity.ok()
+                .body(responseDtoList);
+    }
 }

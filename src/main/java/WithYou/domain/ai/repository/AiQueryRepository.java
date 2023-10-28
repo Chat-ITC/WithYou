@@ -3,6 +3,7 @@ package WithYou.domain.ai.repository;
 import static WithYou.domain.ai.entity.QAiSummaryContent.aiSummaryContent;
 
 import WithYou.domain.ai.entity.AiSummaryContent;
+import WithYou.domain.ai.entity.IsScrap;
 import WithYou.domain.member.entity.Member;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -23,6 +24,21 @@ public class AiQueryRepository {
         JPAQuery<AiSummaryContent> query = jpaQueryFactory
                 .selectFrom(aiSummaryContent) // 별칭 설정
                 .where(aiSummaryContent.member.eq(member))
+                .offset(pageable.getOffset()) // 페이지네이션 설정
+                .limit(pageable.getPageSize());
+
+        QueryResults<AiSummaryContent> results = query.fetchResults(); // 쿼리 실행
+
+        List<AiSummaryContent> contentList = results.getResults();
+        long total = results.getTotal();
+
+        return new PageImpl<>(contentList, pageable, total);
+    }
+
+    public Page<AiSummaryContent> findScrapContentList(Pageable pageable, Member member) {
+        JPAQuery<AiSummaryContent> query = jpaQueryFactory
+                .selectFrom(aiSummaryContent) // 별칭 설정
+                .where(aiSummaryContent.member.eq(member).and(aiSummaryContent.isScrap.eq(IsScrap.YES)))
                 .offset(pageable.getOffset()) // 페이지네이션 설정
                 .limit(pageable.getPageSize());
 
