@@ -22,7 +22,9 @@ public class ScrapService {
     }
 
     private AiSummaryContent getAiSummaryContent(Long id) {
-        return aiRepository.findAiSummaryContentById(id).orElseThrow(() -> new ContentNotFoundException());
+        AiSummaryContent aiSummaryContent = aiRepository.findAiSummaryContentById(id)
+                .orElseThrow(() -> new ContentNotFoundException());
+        return aiSummaryContent;
     }
 
     @Transactional
