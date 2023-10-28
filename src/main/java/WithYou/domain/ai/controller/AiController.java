@@ -73,4 +73,5 @@ public class AiController {
                 .body(responseDtoList);
     }
 
+
 }

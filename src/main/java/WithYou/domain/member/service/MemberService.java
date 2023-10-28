@@ -1,12 +1,7 @@
 package WithYou.domain.member.service;
 
 
-import WithYou.domain.ai.dto.response.QuestionResponseDto;
-import WithYou.domain.ai.entity.AiSummaryContent;
-import WithYou.domain.ai.entity.IsScrap;
-import WithYou.domain.ai.repository.AiRepository;
 import WithYou.domain.member.entity.Member;
-import WithYou.domain.member.exception.ContentNotFoundException;
 import WithYou.domain.member.exception.MemberNickNameDulicatedException;
 import WithYou.domain.member.repository.MemberQueryRepository;
 import WithYou.domain.member.repository.MemberRepository;
@@ -22,7 +17,6 @@ import org.springframework.stereotype.Service;
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final MemberQueryRepository memberQueryRepository;
-    private final AiRepository aiRepository;
 
     public void updateMemberNickName(String nickName, Member member) {
         checkNicknameDuplicated(nickName);
@@ -44,17 +38,6 @@ public class MemberService implements UserDetailsService {
         if (member.isPresent()) {
             throw new MemberNickNameDulicatedException();
         }
-    }
-
-    public QuestionResponseDto scrapContent(Long id) {
-        AiSummaryContent aiSummaryContent = getAiSummaryContent(id);
-        aiSummaryContent.setIsScrap(aiSummaryContent.getIsScrap() == IsScrap.No ? IsScrap.YES : IsScrap.No);
-        return QuestionResponseDto.of(aiSummaryContent);
-    }
-
-
-    private AiSummaryContent getAiSummaryContent(Long id) {
-        return aiRepository.findById(id).orElseThrow(() -> new ContentNotFoundException());
     }
 
     @Override
