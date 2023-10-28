@@ -1,5 +1,6 @@
 package WithYou.domain.ai.entity;
 
+import WithYou.domain.member.entity.Member;
 import WithYou.global.common.entity.BaseEntity;
 
 import javax.persistence.*;
@@ -18,8 +19,10 @@ public class AiSummaryContent extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String title;
     @Column(length = 5000)
     private String content;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 }
