@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ScrapController {
     private final ScrapService scrapService;
 
-    @GetMapping("/member/scrap/{id}")
+    @GetMapping("/scrap/{id}")
     public ResponseEntity<?> scrapHistory(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
                                           @PathVariable Long id) {
         QuestionResponseDto questionResponseDto = scrapService.scrapContent(id);
