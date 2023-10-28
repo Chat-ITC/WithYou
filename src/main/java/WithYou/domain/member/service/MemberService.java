@@ -1,11 +1,15 @@
 package WithYou.domain.member.service;
 
 
+import WithYou.domain.ai.entity.AiSummaryContent;
 import WithYou.domain.member.entity.Member;
 import WithYou.domain.member.exception.MemberNickNameDulicatedException;
+import WithYou.domain.member.repository.MemberQueryRepository;
 import WithYou.domain.member.repository.MemberRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
+    private final MemberQueryRepository memberQueryRepository;
 
     public void updateMemberNickName(String nickName, Member member) {
         checkNicknameDuplicated(nickName);
@@ -36,6 +41,10 @@ public class MemberService implements UserDetailsService {
         if (member.isPresent()) {
             throw new MemberNickNameDulicatedException();
         }
+    }
+
+    public Page<AiSummaryContent> findAiSummaryContentList(Pageable pageable) {
+        return memberQueryRepository.findAiSummaryContentList(pageable);
     }
 
     @Override

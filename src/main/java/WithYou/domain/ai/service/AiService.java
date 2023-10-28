@@ -7,8 +7,6 @@ import WithYou.domain.ai.repository.AiQueryRepository;
 import WithYou.domain.ai.repository.AiRepository;
 import WithYou.domain.member.entity.Member;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,10 +25,6 @@ public class AiService {
         AiSummaryContent aiSummaryContent = questionResponseDto.toEntity();
 
         aiRepository.save(aiSummaryContent);
-    }
-
-    public Page<AiSummaryContent> getAiSummaryContentsList(Pageable pageable, Member member) {
-        return aiQueryRepository.findAiSummaryContentList(member.getId(), pageable);
     }
 
 }
