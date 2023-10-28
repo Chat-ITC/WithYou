@@ -39,8 +39,8 @@ public class AiController {
 
     @PostMapping("/ai/question")
     public ResponseEntity<?> askQuestionToChatGpt(
-            @RequestParam MultipartFile multipartFile,
-            @RequestParam String question,
+            @RequestParam("imageFile") MultipartFile multipartFile,
+            @RequestParam("question") String question,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal
     ) throws IOException {
         File file = File.createTempFile("temp", null);
