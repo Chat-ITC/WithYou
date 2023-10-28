@@ -2,16 +2,24 @@ package WithYou.domain.ai.controller;
 
 import WithYou.domain.ai.dto.request.QuestionRequestDto;
 import WithYou.domain.ai.dto.response.QuestionResponseDto;
+import WithYou.domain.ai.entity.AiSummaryContent;
 import WithYou.domain.ai.service.AiService;
 import WithYou.domain.ai.service.ChatGptService;
 import WithYou.domain.ai.service.OCRGeneralService;
 import WithYou.global.jwt.MemberPrincipal;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,6 +57,18 @@ public class AiController {
 
         return ResponseEntity.ok()
                 .body("저장 완료");
+    }
+
+    @GetMapping("/member/question/list")
+    public ResponseEntity<?> findQuestionList(
+            @PageableDefault(size = 7, direction = Direction.DESC, sort = "createdDate") Pageable pageable) {
+        Page<AiSummaryContent> aiSummaryContents = aiService.findAiSummaryContentList(pageable);
+        List<QuestionResponseDto> responseDtoList = aiSummaryContents.getContent()
+                .stream()
+                .map(QuestionResponseDto::of)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok()
+                .body(responseDtoList);
     }
 
 }
