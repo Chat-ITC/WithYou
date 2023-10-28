@@ -19,4 +19,8 @@ public class QuestionResponseDto {
                 .content(content)
                 .build();
     }
+
+    public static QuestionResponseDto of(AiSummaryContent aiSummaryContent) {
+        return new QuestionResponseDto(aiSummaryContent.getTitle(), aiSummaryContent.getContent());
+    }
 }

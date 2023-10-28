@@ -9,8 +9,5 @@ public class ImageQuestionRequestDTO {
     private MultipartFile imageFile;
     @NotBlank
     private String question;
-    @NotBlank
-    private String major;
-    @NotBlank
-    private String grade;
+
 }
