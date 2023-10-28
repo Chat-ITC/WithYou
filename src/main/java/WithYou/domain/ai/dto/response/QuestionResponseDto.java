@@ -35,6 +35,16 @@ public class QuestionResponseDto {
                 .build();
     }
 
+    public AiSummaryContent toEntityWithScrap(Member member) {
+        return AiSummaryContent.builder()
+                .id(id)
+                .title(title)
+                .content(content)
+                .member(member)
+                .isScrap(isScrap)
+                .build();
+    }
+
     public static QuestionResponseDto of(AiSummaryContent aiSummaryContent) {
         return new QuestionResponseDto(aiSummaryContent.getId(), aiSummaryContent.getTitle(),
                 aiSummaryContent.getContent(),

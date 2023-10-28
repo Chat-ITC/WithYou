@@ -30,7 +30,7 @@ public class ScrapService {
 
     @Transactional
     public void saveSummaryContent(QuestionResponseDto questionResponseDto, Member member) {
-        AiSummaryContent aiSummaryContent = questionResponseDto.toEntity(member);
+        AiSummaryContent aiSummaryContent = questionResponseDto.toEntityWithScrap(member);
         aiRepository.save(aiSummaryContent);
     }
 
