@@ -6,6 +6,7 @@ import WithYou.domain.ai.entity.AiSummaryContent;
 import WithYou.domain.ai.repository.AiQueryRepository;
 import WithYou.domain.ai.repository.AiRepository;
 import WithYou.domain.member.entity.Member;
+import WithYou.domain.scrap.exception.ContentNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,4 +34,8 @@ public class AiService {
         return aiQueryRepository.findAiSummaryContentList(pageable, member);
     }
 
+    public AiSummaryContent getQuestion(Long id) {
+        return aiRepository.findById(id)
+                .orElseThrow(ContentNotFoundException::new);
+    }
 }

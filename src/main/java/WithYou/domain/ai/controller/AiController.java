@@ -59,7 +59,7 @@ public class AiController {
                 .body("저장 완료");
     }
 
-    @GetMapping("/question/list")
+    @GetMapping("question/list")
     public ResponseEntity<?> findQuestionList(
             @PageableDefault(size = 7, direction = Direction.DESC, sort = "lastModifiedDate") Pageable pageable,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
@@ -73,5 +73,10 @@ public class AiController {
                 .body(responseDtoList);
     }
 
-
+    @GetMapping("/question")
+    public ResponseEntity<QuestionResponseDto> getQuestion(@RequestParam("id") Long questionId) {
+        AiSummaryContent aiSummaryContent = aiService.getQuestion(questionId);
+        QuestionResponseDto questionResponseDto = QuestionResponseDto.of(aiSummaryContent);
+        return ResponseEntity.ok(questionResponseDto);
+    }
 }
