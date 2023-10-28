@@ -10,10 +10,17 @@ public class QuestionResponseDto {
     private Long id;
     private String title;
     private String content;
+    private IsScrap isScrap;
 
     public QuestionResponseDto(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public QuestionResponseDto(String title, String content, IsScrap isScrap) {
+        this.title = title;
+        this.content = content;
+        this.isScrap = isScrap;
     }
 
     public AiSummaryContent toEntity(Member member) {
@@ -27,6 +34,7 @@ public class QuestionResponseDto {
     }
 
     public static QuestionResponseDto of(AiSummaryContent aiSummaryContent) {
-        return new QuestionResponseDto(aiSummaryContent.getTitle(), aiSummaryContent.getContent());
+        return new QuestionResponseDto(aiSummaryContent.getTitle(), aiSummaryContent.getContent(),
+                aiSummaryContent.getIsScrap());
     }
 }
