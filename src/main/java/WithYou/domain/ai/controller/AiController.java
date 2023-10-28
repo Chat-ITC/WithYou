@@ -53,16 +53,18 @@ public class AiController {
                 memberPrincipal.getMember());
 
         QuestionResponseDto responseDto = chatGptService.askQuestion(questionRequestDto);
-        aiService.saveSummaryContent(responseDto);
+        aiService.saveSummaryContent(responseDto, memberPrincipal.getMember());
 
         return ResponseEntity.ok()
                 .body("저장 완료");
     }
 
-    @GetMapping("/member/question/list")
+    @GetMapping("/question/list")
     public ResponseEntity<?> findQuestionList(
-            @PageableDefault(size = 7, direction = Direction.DESC, sort = "createdDate") Pageable pageable) {
-        Page<AiSummaryContent> aiSummaryContents = aiService.findAiSummaryContentList(pageable);
+            @PageableDefault(size = 7, direction = Direction.DESC, sort = "createdDate") Pageable pageable,
+            @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+        Page<AiSummaryContent> aiSummaryContents = aiService.findAiSummaryContentList(pageable,
+                memberPrincipal.getMember());
         List<QuestionResponseDto> responseDtoList = aiSummaryContents.getContent()
                 .stream()
                 .map(QuestionResponseDto::of)

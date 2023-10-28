@@ -23,14 +23,14 @@ public class AiService {
     }
 
     @Transactional
-    public void saveSummaryContent(QuestionResponseDto questionResponseDto) {
-        AiSummaryContent aiSummaryContent = questionResponseDto.toEntity();
+    public void saveSummaryContent(QuestionResponseDto questionResponseDto, Member member) {
+        AiSummaryContent aiSummaryContent = questionResponseDto.toEntity(member);
 
         aiRepository.save(aiSummaryContent);
     }
 
-    public Page<AiSummaryContent> findAiSummaryContentList(Pageable pageable) {
-        return aiQueryRepository.findAiSummaryContentList(pageable);
+    public Page<AiSummaryContent> findAiSummaryContentList(Pageable pageable, Member member) {
+        return aiQueryRepository.findAiSummaryContentList(pageable, member);
     }
 
 }

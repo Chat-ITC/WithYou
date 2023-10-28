@@ -1,7 +1,9 @@
 package WithYou.domain.ai.repository;
 
+import static WithYou.domain.ai.entity.QAiSummaryContent.aiSummaryContent;
+
 import WithYou.domain.ai.entity.AiSummaryContent;
-import WithYou.domain.ai.entity.QAiSummaryContent;
+import WithYou.domain.member.entity.Member;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -17,9 +19,10 @@ import org.springframework.stereotype.Repository;
 public class AiQueryRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
-    public Page<AiSummaryContent> findAiSummaryContentList(Pageable pageable) {
+    public Page<AiSummaryContent> findAiSummaryContentList(Pageable pageable, Member member) {
         JPAQuery<AiSummaryContent> query = jpaQueryFactory
-                .selectFrom(QAiSummaryContent.aiSummaryContent) // 별칭 설정
+                .selectFrom(aiSummaryContent) // 별칭 설정
+                .where(aiSummaryContent.member.eq(member))
                 .offset(pageable.getOffset()) // 페이지네이션 설정
                 .limit(pageable.getPageSize());
 
