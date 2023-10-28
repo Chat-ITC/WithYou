@@ -2,7 +2,6 @@ package WithYou.domain.member.entity;
 
 
 import WithYou.domain.ai.entity.AiSummaryContent;
-import WithYou.domain.scrap.entity.ScrapContent;
 import WithYou.global.common.entity.BaseEntity;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,8 +37,6 @@ public class Member extends BaseEntity implements UserDetails {
     private double level;
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<AiSummaryContent> aiSummaryContents = new ArrayList<>();
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    public List<ScrapContent> scrapContents = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
