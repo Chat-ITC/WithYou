@@ -4,6 +4,8 @@ import WithYou.domain.member.entity.Member;
 import WithYou.global.common.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,6 +30,8 @@ public class AiSummaryContent extends BaseEntity {
     private String title;
     @Column(length = 5000)
     private String content;
+    @Enumerated(EnumType.STRING)
+    private IsScrap isScrap;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
