@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+@Service
 public class ChatGptService {
     @Value("${spring.openai.model}")        //gpt-3.5-turbo
     private String model;

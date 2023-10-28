@@ -1,18 +1,22 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:myslq://withyoudatabase.c7d0z1sithsu.ap-northeast-2.rds.amazonaws.com:3306/withyoudatabase
-    username: admin
-    password: naver.com1
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:tcp://localhost/~/test
+    username: sa
+    password:
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
         show_sql: true
+
+  ocr:
+    url: https://7we3mnhgt6.apigw.ntruss.com/custom/v1/24984/3632f985fd8c43f9e5604956709cd1e0a3bbb4e808524e2619b72b4bc9cfac0f/general
+    key: aGd0SkZZTkhCWEl1elVndlhlbElrWU9iZ3VTUXJFb1g=
 
   servlet:
     multipart:
