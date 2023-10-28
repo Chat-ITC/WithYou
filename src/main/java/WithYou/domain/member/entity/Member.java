@@ -1,14 +1,17 @@
 package WithYou.domain.member.entity;
 
 
+import WithYou.domain.ai.entity.AiSummaryContent;
 import WithYou.global.common.entity.BaseEntity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,9 +35,8 @@ public class Member extends BaseEntity implements UserDetails {
     private String major;
     private int grade;
     private double level;
-
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-//    private List<>
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<AiSummaryContent> aiSummaryContents = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

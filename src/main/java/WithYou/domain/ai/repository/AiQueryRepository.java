@@ -1,14 +1,15 @@
 package WithYou.domain.ai.repository;
 
-import static WithYou.domain.ai.entity.QAiSummaryContent.aiSummaryContent;
-
 import WithYou.domain.ai.entity.AiSummaryContent;
+import WithYou.domain.ai.entity.QAiSummaryContent;
+import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,17 +17,17 @@ import org.springframework.stereotype.Repository;
 public class AiQueryRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
-    public Page<AiSummaryContent> findAiSummaryContentList(Long id, Pageable pageable) {
+    public Page<AiSummaryContent> findAiSummaryContentList(Pageable pageable) {
         JPAQuery<AiSummaryContent> query = jpaQueryFactory
-                .selectFrom(aiSummaryContent)
-                .where(aiSummaryContent.id.eq(id));
+                .selectFrom(QAiSummaryContent.aiSummaryContent) // 별칭 설정
+                .offset(pageable.getOffset()) // 페이지네이션 설정
+                .limit(pageable.getPageSize());
 
-        return PageableExecutionUtils.getPage(
-                query.fetch(), // 쿼리 결과 리스트
-                pageable, // 페이지 정보
-                () -> query.fetchCount() // 총 결과 수를 계산하는 로직
-        );
+        QueryResults<AiSummaryContent> results = query.fetchResults(); // 쿼리 실행
+
+        List<AiSummaryContent> contentList = results.getResults();
+        long total = results.getTotal();
+
+        return new PageImpl<>(contentList, pageable, total);
     }
-
-
 }

@@ -24,5 +24,4 @@ public class MemberController {
         return ResponseEntity.ok()
                 .body("update 완료");
     }
-
 }

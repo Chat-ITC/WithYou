@@ -29,8 +29,8 @@ public class AiService {
         aiRepository.save(aiSummaryContent);
     }
 
-    public Page<AiSummaryContent> getAiSummaryContentsList(Pageable pageable, Member member) {
-        return aiQueryRepository.findAiSummaryContentList(member.getId(), pageable);
+    public Page<AiSummaryContent> findAiSummaryContentList(Pageable pageable) {
+        return aiQueryRepository.findAiSummaryContentList(pageable);
     }
 
 }

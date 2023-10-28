@@ -3,6 +3,7 @@ package WithYou.domain.member.service;
 
 import WithYou.domain.member.entity.Member;
 import WithYou.domain.member.exception.MemberNickNameDulicatedException;
+import WithYou.domain.member.repository.MemberQueryRepository;
 import WithYou.domain.member.repository.MemberRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
+    private final MemberQueryRepository memberQueryRepository;
 
     public void updateMemberNickName(String nickName, Member member) {
         checkNicknameDuplicated(nickName);

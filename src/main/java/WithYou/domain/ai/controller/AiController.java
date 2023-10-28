@@ -71,12 +71,10 @@ public class AiController {
         }
     }
 
-    @GetMapping("/ai/list")
-    public ResponseEntity<?> getQuestionList(@AuthenticationPrincipal MemberPrincipal memberPrincipal
-            , @PageableDefault(size = 5, direction = Direction.DESC, sort = "createAt") Pageable pageable) {
-        Page<AiSummaryContent> aiSummaryContents = aiService.getAiSummaryContentsList(pageable,
-                memberPrincipal.getMember());
-
+    @GetMapping("/member/question/list")
+    public ResponseEntity<?> findQuestionList(
+            @PageableDefault(size = 7, direction = Direction.DESC, sort = "createdDate") Pageable pageable) {
+        Page<AiSummaryContent> aiSummaryContents = aiService.findAiSummaryContentList(pageable);
         List<QuestionResponseDto> responseDtoList = aiSummaryContents.getContent()
                 .stream()
                 .map(QuestionResponseDto::of)
@@ -84,4 +82,5 @@ public class AiController {
         return ResponseEntity.ok()
                 .body(responseDtoList);
     }
+
 }
