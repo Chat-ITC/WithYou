@@ -78,8 +78,6 @@ public class TokenProvider {
         } catch (UnsupportedJwtException e) {
             throw new TokenUnsupportedException();
         } catch (Exception e) {
-            log.error("토큰 검증 중에 오류가 발생했습니다: {}", e.getMessage());
-            log.error("예외 스택 트레이스: {}", e.getStackTrace());
             throw new TokenException();
         }
     }
