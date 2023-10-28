@@ -15,7 +15,7 @@ public class AiService {
     private final AiRepository aiRepository;
 
     public QuestionRequestDto makeQuestionRequestDto(String ocrResult, String question, Member member) {
-        return new QuestionRequestDto(ocrResult, ocrResult, member);
+        return new QuestionRequestDto(ocrResult, question, member);
     }
 
     @Transactional
