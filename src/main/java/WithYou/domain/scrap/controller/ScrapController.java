@@ -20,11 +20,8 @@ public class ScrapController {
     @GetMapping("/scrap/{id}")
     public ResponseEntity<?> scrapHistory(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
                                           @PathVariable Long id) {
-        log.info(id.toString());
         QuestionResponseDto questionResponseDto = scrapService.scrapContent(id);
-        log.info("여기까진 성공1");
         scrapService.saveSummaryContent(questionResponseDto, memberPrincipal.getMember());
-        log.info("여기까진 성공2");
         return ResponseEntity.ok()
                 .body(questionResponseDto.getIsScrap());
     }
