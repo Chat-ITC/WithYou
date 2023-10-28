@@ -10,7 +10,6 @@ import WithYou.global.jwt.MemberPrincipal;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -65,10 +64,7 @@ public class AiController {
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
         Page<AiSummaryContent> aiSummaryContents = aiService.findAiSummaryContentList(pageable,
                 memberPrincipal.getMember());
-        List<QuestionResponseDto> responseDtoList = aiSummaryContents.getContent()
-                .stream()
-                .map(QuestionResponseDto::of)
-                .collect(Collectors.toList());
+        List<QuestionResponseDto> responseDtoList = aiService.changeToQuestionReponseList(aiSummaryContents);
         return ResponseEntity.ok()
                 .body(responseDtoList);
     }
