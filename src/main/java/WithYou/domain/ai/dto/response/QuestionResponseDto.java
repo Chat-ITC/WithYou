@@ -1,6 +1,6 @@
 package WithYou.domain.ai.dto.response;
 
-import WithYou.domain.ai.entity.AiSummaryCode;
+import WithYou.domain.ai.entity.AiSummaryContent;
 import lombok.Getter;
 
 @Getter
@@ -13,8 +13,8 @@ public class QuestionResponseDto {
         this.content = content;
     }
 
-    public AiSummaryCode toEntity() {
-        return AiSummaryCode.builder()
+    public AiSummaryContent toEntity() {
+        return AiSummaryContent.builder()
                 .title(title)
                 .content(content)
                 .build();

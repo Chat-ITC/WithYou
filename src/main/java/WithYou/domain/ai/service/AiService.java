@@ -2,7 +2,7 @@ package WithYou.domain.ai.service;
 
 import WithYou.domain.ai.dto.request.QuestionRequestDto;
 import WithYou.domain.ai.dto.response.QuestionResponseDto;
-import WithYou.domain.ai.entity.AiSummaryCode;
+import WithYou.domain.ai.entity.AiSummaryContent;
 import WithYou.domain.ai.repository.AiRepository;
 import WithYou.domain.member.entity.Member;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +20,9 @@ public class AiService {
 
     @Transactional
     public void saveSummaryContent(QuestionResponseDto questionResponseDto) {
-        AiSummaryCode aiSummaryCode = questionResponseDto.toEntity();
+        AiSummaryContent aiSummaryContent = questionResponseDto.toEntity();
 
-        aiRepository.save(aiSummaryCode);
+        aiRepository.save(aiSummaryContent);
     }
 
 }

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AiSummaryCode {
+public class AiSummaryContent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
