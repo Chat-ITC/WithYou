@@ -17,13 +17,14 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class ChatGptService {
-    @Value("${spring.openai.model}")        //gpt-3.5-turbo
+
+    @Value("${openai.model}")
     private String model;
 
-    @Value("${spring.openai.api.url}")  //https://api.openai.com/v1/chat/completions
+    @Value("${openai.api.url}")
     private String apiUrl;
 
-    @Value("${spring.openai.api.api-key}")      //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
+    @Value("${openai.api.api-key}")
     private String openaiApiKey;
 
     private HttpEntity<ChatGptRequestDto> getHttpEntity(ChatGptRequestDto chatRequest) {
