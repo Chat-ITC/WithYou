@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
     public MultipartResolver multipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
         resolver.setDefaultEncoding("utf-8");
-        resolver.setMaxUploadSize(10240000); // 최대 업로드 크기 (바이트)
+        resolver.setMaxUploadSize(20480000); // 최대 업로드 크기 (바이트)
         return resolver;
     }
 }
