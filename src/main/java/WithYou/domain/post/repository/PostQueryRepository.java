@@ -26,8 +26,6 @@ public class PostQueryRepository {
                 .limit(pageable.getPageSize());
 
         QueryResults<Post> results = posts.fetchResults();
-        return new PageImpl<>(results.getResults(), pageable, results.getTotal());
+        return new PageImpl<>(results.getResults(), pageable, posts.fetchCount());
     }
-
-
 }
