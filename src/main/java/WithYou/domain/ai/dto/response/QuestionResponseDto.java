@@ -6,6 +6,8 @@ import WithYou.domain.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 public class QuestionResponseDto {
@@ -13,6 +15,7 @@ public class QuestionResponseDto {
     private String title;
     private String content;
     private IsScrap isScrap;
+    private LocalDateTime createdDate;
 
     public QuestionResponseDto(String title, String content) {
         this.title = title;
@@ -48,6 +51,7 @@ public class QuestionResponseDto {
     public static QuestionResponseDto of(AiSummaryContent aiSummaryContent) {
         return new QuestionResponseDto(aiSummaryContent.getId(), aiSummaryContent.getTitle(),
                 aiSummaryContent.getContent(),
-                aiSummaryContent.getIsScrap());
+                aiSummaryContent.getIsScrap(),
+                aiSummaryContent.getCreatedDate());
     }
 }
