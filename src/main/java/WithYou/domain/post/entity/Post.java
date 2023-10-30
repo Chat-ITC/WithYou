@@ -34,4 +34,8 @@ public class Post extends BaseEntity {
     private int commentCount;
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> commentList = new ArrayList<>();
+
+    public void plusCommentCount() {
+        this.commentCount += 1;
+    }
 }

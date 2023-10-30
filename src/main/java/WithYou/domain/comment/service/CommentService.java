@@ -25,9 +25,8 @@ public class CommentService {
 
     public void registComment(Long id, CommentRegistDto commentRegistDto, Member member) {
         Post post = postReporitoy.findPostById(id).orElseThrow(() -> new PostNotFoundException());
-
+        pluscommentCount(post);
         Comment comment = commentRegistDto.of(member, post);
-        log.info(commentRegistDto.getContent());
         commentRepository.save(comment);
     }
 
@@ -40,5 +39,9 @@ public class CommentService {
     public List<Comment> findCommentByPostId(Long id) {
         Post post = postReporitoy.findPostById(id).orElseThrow(() -> new PostNotFoundException());
         return post.getCommentList();
+    }
+
+    private void pluscommentCount(Post post) {
+        post.plusCommentCount();
     }
 }

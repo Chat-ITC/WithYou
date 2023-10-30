@@ -52,4 +52,8 @@ public class PostService {
         PostLookupDto postLookupDto = PostLookupDto.of(post);
         return postLookupDto;
     }
+
+    public Post findPostById(Long id) {
+        return postReporitoy.findPostById(id).orElseThrow(() -> new PostNotFoundException());
+    }
 }

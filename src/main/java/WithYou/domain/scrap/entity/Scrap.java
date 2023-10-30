@@ -1,8 +1,7 @@
-package WithYou.domain.comment.entity;
+package WithYou.domain.scrap.entity;
 
-import WithYou.domain.post.entity.Post;
+import WithYou.domain.member.entity.Member;
 import WithYou.global.common.entity.BaseEntity;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,18 +17,17 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Getter
-public class Comment extends BaseEntity {
+@Builder
+public class Scrap extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 1000)
+    private Long postId;
+
+    private String title;
     private String content;
-    private String userNickName;
-    private String userMajor;
-    private int userGrade;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Post post;
+    @JoinColumn(name = "member_id")
+    private Member member;
 }

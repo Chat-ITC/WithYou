@@ -2,6 +2,10 @@ package WithYou.domain.scrap.controller;
 
 import WithYou.domain.ai.dto.response.QuestionResponseDto;
 import WithYou.domain.ai.entity.AiSummaryContent;
+import WithYou.domain.post.entity.Post;
+import WithYou.domain.post.service.PostService;
+import WithYou.domain.scrap.dto.response.PostScrapDto;
+import WithYou.domain.scrap.entity.Scrap;
 import WithYou.domain.scrap.service.ScrapService;
 import WithYou.global.jwt.MemberPrincipal;
 import java.util.List;
@@ -16,6 +20,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ScrapController {
     private final ScrapService scrapService;
+    private final PostService postService;
 
     @PatchMapping("/scrap/{id}")
     public ResponseEntity<?> scrapHistory(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
@@ -42,5 +48,22 @@ public class ScrapController {
         List<QuestionResponseDto> responseDtoList = scrapService.changeToQuestionReponseList(aiSummaryContents);
         return ResponseEntity.ok()
                 .body(responseDtoList);
+    }
+
+    @PostMapping("/scrap/post/{id}")
+    public ResponseEntity<?> scrapPost(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
+                                       @PathVariable Long id) {
+        Post post = postService.findPostById(id);
+        scrapService.scrapPost(post, memberPrincipal.getMember());
+        return ResponseEntity.ok()
+                .body("post 스크랩 완료");
+    }
+
+    @GetMapping("/scrap/post/list")
+    public ResponseEntity<?> getScrapPostList(@AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+        List<Scrap> scrapList = scrapService.findScrapByMemberId(memberPrincipal.getMember());
+        List<PostScrapDto> postScrapDtos = scrapService.changeScrapToDto(scrapList);
+        return ResponseEntity.ok()
+                .body(postScrapDtos);
     }
 }

@@ -6,7 +6,12 @@ import WithYou.domain.ai.entity.IsScrap;
 import WithYou.domain.ai.repository.AiQueryRepository;
 import WithYou.domain.ai.repository.AiRepository;
 import WithYou.domain.member.entity.Member;
+import WithYou.domain.post.entity.Post;
+import WithYou.domain.scrap.ScrapRepository;
+import WithYou.domain.scrap.dto.response.PostScrapDto;
+import WithYou.domain.scrap.entity.Scrap;
 import WithYou.domain.scrap.exception.ContentNotFoundException;
+import WithYou.domain.scrap.exception.PostScrapNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ScrapService {
     private final AiRepository aiRepository;
     private final AiQueryRepository aiQueryRepository;
+    private final ScrapRepository scrapRepository;
 
     public QuestionResponseDto scrapContent(Long id) {
         AiSummaryContent aiSummaryContent = getAiSummaryContent(id);
@@ -48,6 +54,34 @@ public class ScrapService {
         return page.getContent()
                 .stream()
                 .map(QuestionResponseDto::of)
+                .collect(Collectors.toList());
+    }
+
+    public void scrapPost(Post post, Member member) {
+        Scrap scrap = makeScrapObject(post, member);
+        scrapRepository.save(scrap);
+    }
+
+    private Scrap makeScrapObject(Post post, Member member) {
+        return Scrap.builder()
+                .postId(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .member(member)
+                .build();
+    }
+
+    public List<Scrap> findScrapByMemberId(Member member) {
+        List<Scrap> scrapList = scrapRepository.findScrapsByMember(member);
+        if (scrapList.isEmpty()) {
+            throw new PostScrapNotFoundException();
+        }
+        return scrapList;
+    }
+
+    public List<PostScrapDto> changeScrapToDto(List<Scrap> scrapList) {
+        return scrapList.stream()
+                .map(PostScrapDto::of)
                 .collect(Collectors.toList());
     }
 
