@@ -28,7 +28,6 @@ public class PostService {
 
     public Page<Post> lookupDtoList(Member member, Pageable pageable) {
         return postQueryRepository.findPostByMemberGrade(pageable, member);
-
     }
 
     public List<PostLookupDto> changeToPostLookupDtoList(Page<Post> posts) {

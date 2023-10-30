@@ -28,9 +28,10 @@ public class Post extends BaseEntity {
     private String title;
     @Column(length = 5000)
     private String content;
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    private List<Comment> commentList = new ArrayList<>();
     private String userNickName;
     private String userMajor;
     private int userGrade;
+    private int commentCount;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<Comment> commentList = new ArrayList<>();
 }
