@@ -4,7 +4,9 @@ import WithYou.domain.comment.entity.Comment;
 import WithYou.domain.member.entity.Member;
 import WithYou.domain.post.entity.Post;
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
 
+@Getter
 public class CommentRegistDto {
     @NotNull
     private String content;

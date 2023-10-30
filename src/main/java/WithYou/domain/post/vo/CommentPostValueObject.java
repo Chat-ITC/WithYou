@@ -4,7 +4,9 @@ import WithYou.domain.comment.dto.response.CommentResponseDto;
 import WithYou.domain.post.dto.response.PostLookupDto;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 public class CommentPostValueObject {
     private List<CommentResponseDto> commentResponseDto;
