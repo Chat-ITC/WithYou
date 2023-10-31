@@ -24,7 +24,6 @@ public class AiQueryRepository {
         JPAQuery<AiSummaryContent> query = jpaQueryFactory
                 .selectFrom(aiSummaryContent) // 별칭 설정
                 .where(aiSummaryContent.member.eq(member))
-                .orderBy(aiSummaryContent.createdDate.desc())
                 .offset(pageable.getOffset()) // 페이지네이션 설정
                 .limit(pageable.getPageSize());
 
