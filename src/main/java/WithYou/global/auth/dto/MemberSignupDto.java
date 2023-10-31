@@ -18,11 +18,6 @@ public class MemberSignupDto {
     @NotBlank
     private String nickName;
 
-
-    public void setUserPassword(String password) {
-        userPassword = password;
-    }
-
     public Member toEntity(String encodePassword) {
         return Member.builder()
                 .userId(userId)

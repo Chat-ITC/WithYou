@@ -23,8 +23,7 @@ public class CommentService {
     private final CommentQueryRepository commentQueryRepository;
     private final PostReporitoy postReporitoy;
 
-    public void registComment(Long id, CommentRegistDto commentRegistDto, Member member) {
-        Post post = postReporitoy.findPostById(id).orElseThrow(() -> new PostNotFoundException());
+    public void registComment(Post post, CommentRegistDto commentRegistDto, Member member) {
         pluscommentCount(post);
         Comment comment = commentRegistDto.of(member, post);
         commentRepository.save(comment);

@@ -14,10 +14,11 @@ public class PostLookupDto {
     private String userNickName;
     private String userMajor;
     private int userGrade;
+    private int commentCount;
     private LocalDateTime createdDate;
 
     public static PostLookupDto of(Post post) {
         return new PostLookupDto(post.getId(), post.getTitle(), post.getContent(), post.getUserNickName(),
-                post.getUserMajor(), post.getUserGrade(), post.getCreatedDate());
+                post.getUserMajor(), post.getUserGrade(), post.getCommentCount(), post.getCreatedDate());
     }
 }

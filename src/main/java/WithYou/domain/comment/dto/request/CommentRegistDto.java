@@ -3,12 +3,12 @@ package WithYou.domain.comment.dto.request;
 import WithYou.domain.comment.entity.Comment;
 import WithYou.domain.member.entity.Member;
 import WithYou.domain.post.entity.Post;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
 public class CommentRegistDto {
-    @NotNull
+    @NotBlank
     private String content;
 
     public Comment of(Member member, Post post) {
