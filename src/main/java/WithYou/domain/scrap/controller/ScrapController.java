@@ -41,7 +41,7 @@ public class ScrapController {
 
     @GetMapping("/scrap/list")
     public ResponseEntity<?> getScrapList(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
-                                          @PageableDefault(size = 5, direction = Direction.DESC, sort = "lastModifiedDate")
+                                          @PageableDefault(size = 100, direction = Direction.DESC, sort = "lastModifiedDate")
                                           Pageable pageable) {
         Page<AiSummaryContent> aiSummaryContents = scrapService.findScrapContentList(pageable,
                 memberPrincipal.getMember());

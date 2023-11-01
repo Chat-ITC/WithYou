@@ -39,7 +39,7 @@ public class PostController {
 
     @GetMapping("/post/lookup")
     public ResponseEntity<?> lookupPost(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
-                                        @PageableDefault(size = 5, sort = "lastModifiedDate", direction = Direction.ASC)
+                                        @PageableDefault(size = 100, sort = "lastModifiedDate", direction = Direction.ASC)
                                         Pageable pageable) {
         Page<Post> posts = postService.lookupDtoList(memberPrincipal.getMember(), pageable);
         List<PostLookupDto> postLookupDtos = postService.changeToPostLookupDtoList(posts);
