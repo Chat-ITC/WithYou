@@ -1,4 +1,4 @@
-package WithYou.domain.member.dto.request;
+package WithYou.domain.member.dto.response;
 
 
 import WithYou.domain.member.entity.Member;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @AllArgsConstructor
-public class MemberMypageCheckDto {
+public class MemberMyPageDto {
     @NotBlank
     private String nickName;
     @NotBlank
@@ -19,7 +19,7 @@ public class MemberMypageCheckDto {
     @NotBlank
     private double level;
 
-    public static MemberMypageCheckDto of(Member member) {
-        return new MemberMypageCheckDto(member.getNickName(), member.getMajor(), member.getGrade(), member.getLevel());
+    public static MemberMyPageDto of(Member member) {
+        return new MemberMyPageDto(member.getNickName(), member.getMajor(), member.getGrade(), member.getLevel());
     }
 }
