@@ -46,7 +46,7 @@ public class ChatGptService {
                 "이때 만약 전공과 관련없는 내용이라면 질문에 초점을 맞춰서 대답해줘. 추가 질문은 없어\n" + ocrResult;
         String content = askQuestionGpt(promptQuestion, major);
 
-        String promptTitle = "다음 내용에 어울리는 제목 2 ~ 3단어로 짧게 만들어줘" + content;
+        String promptTitle = "다음 내용에 어울리는 제목 단어 형식으로 짧게 만들어줘" + content;
         String title = askQuestionGpt(promptTitle, major);
 
         QuestionResponseDto questionResponseDto = new QuestionResponseDto(title, content);
