@@ -72,7 +72,7 @@ public class ScrapService {
     }
 
     public List<Scrap> findScrapByMemberId(Member member) {
-        List<Scrap> scrapList = scrapRepository.findScrapsByMember(member);
+        List<Scrap> scrapList = scrapRepository.findScrapByMemberId(member.getId());
         if (scrapList.isEmpty()) {
             throw new PostScrapNotFoundException();
         }

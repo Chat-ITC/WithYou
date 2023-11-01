@@ -61,7 +61,7 @@ public class AiController {
 
     @GetMapping("question/list")
     public ResponseEntity<?> findQuestionList(
-            @PageableDefault(size = 7, direction = Direction.DESC, sort = "createdDate") Pageable pageable,
+            @PageableDefault(size = 10, direction = Direction.DESC, sort = "id") Pageable pageable,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
         Page<AiSummaryContent> aiSummaryContents = aiService.findAiSummaryContentList(pageable,
                 memberPrincipal.getMember());
