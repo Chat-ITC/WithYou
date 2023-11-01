@@ -12,6 +12,7 @@ import WithYou.global.jwt.MemberPrincipal;
 import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -26,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class PostController {
     private final PostService postService;
     private final CommentService commentService;
@@ -36,8 +38,11 @@ public class PostController {
                                                             @RequestParam(value = "title") String title,
                                                             @RequestParam(value = "content") String content)
             throws IOException {
+        log.info(multipartFile.toString());
         String imageUrl = postService.uploadImage(multipartFile);
+        log.info(imageUrl);
         PostRegistResponseDto responseDto = new PostRegistResponseDto(title, content, imageUrl);
+        log.info(responseDto.getImageUrl());
         postService.savePost(responseDto, memberPrincipal.getMember());
         return ResponseEntity.ok()
                 .body(responseDto);
