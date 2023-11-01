@@ -1,6 +1,7 @@
 package WithYou.domain.member.service;
 
 
+import WithYou.domain.member.dto.request.MemberMypageCheckDto;
 import WithYou.domain.member.entity.Member;
 import WithYou.domain.member.exception.MemberNickNameDulicatedException;
 import WithYou.domain.member.repository.MemberQueryRepository;
@@ -44,5 +45,9 @@ public class MemberService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return memberRepository.findMemberByUserId(username)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+    }
+
+    public Optional<Member> checkMemberInfo(Member member){
+        return memberRepository.findMemberById(member.getId());
     }
 }
