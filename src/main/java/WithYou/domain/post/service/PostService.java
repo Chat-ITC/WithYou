@@ -75,19 +75,19 @@ public class PostService {
     }
 
     public String uploadImage(MultipartFile multipartFile) throws IOException {
-        String s3FileName = setImageName(multipartFile);
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentLength(multipartFile.getInputStream().available());
-
-        amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objectMetadata);
-        return amazonS3.getUrl(bucket, s3FileName).toString();
+        return setImageName(multipartFile);
     }
 
-    private String setImageName(MultipartFile multipartFile) {
+    private String setImageName(MultipartFile multipartFile) throws IOException {
         if (multipartFile == null || multipartFile.isEmpty()) {
             return "nothing";
         } else {
-            return UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
+            String s3FileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentLength(multipartFile.getInputStream().available());
+
+            amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objectMetadata);
+            return amazonS3.getUrl(bucket, s3FileName).toString();
         }
     }
 
