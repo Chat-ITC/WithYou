@@ -7,10 +7,12 @@ import WithYou.domain.post.dto.request.PostRegistDto;
 import WithYou.domain.post.dto.response.PostLookupDto;
 import WithYou.domain.post.entity.Post;
 import WithYou.domain.post.service.PostService;
-import WithYou.domain.post.vo.CommentPostValueObject;
+import WithYou.domain.post.vo.CommentPostVo;
 import WithYou.global.jwt.MemberPrincipal;
+import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,10 +34,13 @@ public class PostController {
 
     @PostMapping("/post/regist")
     public ResponseEntity<PostRegistDto> registPost(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
-                                                    @RequestBody PostRegistDto postRegistDto) {
-        postService.savePost(postRegistDto, memberPrincipal.getMember());
+                                                    @RequestParam(value = "image", required = false) MultipartFile multipartFile,
+                                                    @RequestBody PostRegistDto postRegistDto) throws IOException {
+        String imageUrl = postService.uploadImage(multipartFile);
+        PostRegistDto postRegistDtowithImage = new PostRegistDto(postRegistDto, imageUrl);
+        postService.savePost(postRegistDtowithImage, memberPrincipal.getMember());
         return ResponseEntity.ok()
-                .body(postRegistDto);
+                .body(postRegistDtowithImage);
     }
 
     @GetMapping("/post/lookup")
@@ -49,14 +55,15 @@ public class PostController {
 
     @GetMapping("/post")
     public ResponseEntity<?> findPostById(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
-                                          @RequestParam("id") Long id) {
+                                          @RequestParam("id") Long id) throws IOException {
         Post post = postService.findPostAndVerifyMember(id, memberPrincipal.getMember());
         List<Comment> comment = commentService.findCommentByPostId(id);
         List<CommentResponseDto> commentResponseDtoList = commentService.changeCommentListToDtoList(comment);
         PostLookupDto postLookupDto = postService.changePostToDto(post);
-        CommentPostValueObject commentPostValueObject = new CommentPostValueObject(commentResponseDtoList,
-                postLookupDto);
+        ByteArrayResource imageUrl = postService.getImageUrl(post.getImageUrl());
+        CommentPostVo commentPostVo = new CommentPostVo(commentResponseDtoList,
+                postLookupDto, imageUrl);
         return ResponseEntity.ok()
-                .body(commentPostValueObject);
+                .body(commentPostVo);
     }
 }

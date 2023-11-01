@@ -32,6 +32,8 @@ public class Post extends BaseEntity {
     private String userMajor;
     private int userGrade;
     private int commentCount;
+    @Column(length = 1000)
+    private String imageUrl;
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> commentList = new ArrayList<>();
 

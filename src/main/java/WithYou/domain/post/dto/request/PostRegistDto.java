@@ -11,6 +11,11 @@ public class PostRegistDto {
     private String title;
     @NotBlank
     private String content;
+    private String imageUrl;
+
+    public PostRegistDto(PostRegistDto postRegistDto, String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public Post toEntity(Member member) {
         return Post.builder()
@@ -19,6 +24,7 @@ public class PostRegistDto {
                 .userGrade(member.getGrade())
                 .userMajor(member.getMajor())
                 .userNickName(member.getNickName())
+                .imageUrl(imageUrl)
                 .build();
     }
 }

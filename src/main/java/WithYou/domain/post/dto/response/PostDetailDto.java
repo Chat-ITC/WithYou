@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class PostLookupDto {
+public class PostDetailDto {
     private Long id;
     private String title;
     private String content;
@@ -16,11 +16,9 @@ public class PostLookupDto {
     private int userGrade;
     private int commentCount;
     private LocalDateTime createdDate;
-    private String imageUrl;
 
-    public static PostLookupDto of(Post post) {
-        return new PostLookupDto(post.getId(), post.getTitle(), post.getContent(), post.getUserNickName(),
-                post.getUserMajor(), post.getUserGrade(), post.getCommentCount(), post.getCreatedDate(),
-                post.getImageUrl());
+    public static PostDetailDto of(Post post) {
+        return new PostDetailDto(post.getId(), post.getTitle(), post.getContent(), post.getUserNickName(),
+                post.getUserMajor(), post.getUserGrade(), post.getCommentCount(), post.getCreatedDate());
     }
 }
