@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ScrapRepository extends JpaRepository<Scrap, Long> {
-    List<Scrap> findScrapByMemberId(Long memberId);
+    List<Scrap> findScrapByMemberIdOOrderByIdDesc(Long memberId);
 
     Optional<Scrap> findScrapByPostId(Long postId);
 }
