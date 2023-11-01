@@ -1,24 +1,21 @@
-package WithYou.domain.post.dto.request;
+package WithYou.domain.post.dto.response;
 
 import WithYou.domain.member.entity.Member;
+import WithYou.domain.post.dto.request.PostRegistDto;
 import WithYou.domain.post.entity.Post;
 import javax.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-public class PostRegistDto {
+public class PostRegistResponseDto {
     @NotBlank
     private String title;
     @NotBlank
     private String content;
+    private String imageUrl;
 
-    public PostRegistDto(PostRegistDto postRegistDto, String imageUrl) {
-        this.content = postRegistDto.content;
-        this.title = postRegistDto.title;
+    public PostRegistResponseDto(PostRegistDto responseDto, String imageUrl) {
+        this.content = responseDto.getContent();
+        this.title = responseDto.getTitle();
+        this.imageUrl = imageUrl;
     }
 
     public Post toEntity(Member member) {
@@ -30,4 +27,5 @@ public class PostRegistDto {
                 .userNickName(member.getNickName())
                 .build();
     }
+
 }

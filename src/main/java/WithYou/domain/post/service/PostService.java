@@ -2,8 +2,8 @@ package WithYou.domain.post.service;
 
 import WithYou.domain.member.entity.Member;
 import WithYou.domain.member.service.MemberService;
-import WithYou.domain.post.dto.request.PostRegistDto;
 import WithYou.domain.post.dto.response.PostLookupDto;
+import WithYou.domain.post.dto.response.PostRegistResponseDto;
 import WithYou.domain.post.entity.Post;
 import WithYou.domain.post.exception.DepartmentNotMatchException;
 import WithYou.domain.post.exception.PostNotFoundException;
@@ -11,16 +11,12 @@ import WithYou.domain.post.repository.PostQueryRepository;
 import WithYou.domain.post.repository.PostReporitoy;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
-import com.amazonaws.util.IOUtils;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -37,8 +33,8 @@ public class PostService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public void savePost(PostRegistDto postRegistDto, Member member) {
-        Post post = postRegistDto.toEntity(member);
+    public void savePost(PostRegistResponseDto responseDto, Member member) {
+        Post post = responseDto.toEntity(member);
         memberService.upgradeMemberLevelUp(member);
         postReporitoy.save(post);
     }
@@ -89,23 +85,5 @@ public class PostService {
             amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objectMetadata);
             return amazonS3.getUrl(bucket, s3FileName).toString();
         }
-    }
-
-    public ByteArrayResource getImageUrlResource(String imageUrl) throws IOException {
-        if ("nothing".equals(imageUrl)) {
-            return new ByteArrayResource(new byte[0]);
-        }
-        return getImageUrl(imageUrl);
-    }
-
-    public ByteArrayResource getImageUrl(String imageUrl) throws IOException {
-        S3ObjectInputStream inputStream = getImageFromAmazonS3(imageUrl);
-        byte[] imageBytes = IOUtils.toByteArray(inputStream);
-        return new ByteArrayResource(imageBytes);
-    }
-
-    private S3ObjectInputStream getImageFromAmazonS3(String imageUrl) {
-        S3Object s3Object = amazonS3.getObject(bucket, imageUrl);
-        return s3Object.getObjectContent();
     }
 }
