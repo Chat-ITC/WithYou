@@ -21,7 +21,7 @@ public class MemberController {
     private final AiService aiService;
 
     @PatchMapping("/member/update")
-    public ResponseEntity<?> updateMemberNickname(
+    public ResponseEntity<String> updateMemberNickname(
             @RequestBody @Valid MemberNickNameUpdateDto memberNickNameUpdateDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
         memberService.updateMemberNickName(memberNickNameUpdateDto.getNickName(), memberPrincipal.getMember());

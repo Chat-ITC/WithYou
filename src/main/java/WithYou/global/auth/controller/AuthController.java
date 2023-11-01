@@ -7,6 +7,7 @@ import WithYou.global.auth.service.AuthService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,5 +44,11 @@ public class AuthController {
                 .header("refreshToken", refreshToken)
                 .header("accessToken", accessToken)
                 .body("로그인을 성공적으로 마쳤습니다.");
+    }
+
+    @PostMapping("/member/logout") //redis를 구현하지 않아서 블랙리스트 구현 안함
+    public ResponseEntity<?> memberLogout(@AuthenticationPrincipal Member member) {
+        return ResponseEntity.ok()
+                .body("로그아웃 완료");
     }
 }

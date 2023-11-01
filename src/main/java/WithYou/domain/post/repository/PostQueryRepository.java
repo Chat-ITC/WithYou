@@ -22,6 +22,7 @@ public class PostQueryRepository {
         JPAQuery<Post> posts = jpaQueryFactory
                 .selectFrom(post)
                 .where(post.userMajor.eq(member.getMajor()))
+                .orderBy(post.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize());
 

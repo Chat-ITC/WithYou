@@ -40,9 +40,10 @@ public class ScrapController {
     }
 
     @GetMapping("/scrap/list")
-    public ResponseEntity<?> getScrapList(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
-                                          @PageableDefault(size = 100, direction = Direction.ASC, sort = "lastModifiedDate")
-                                          Pageable pageable) {
+    public ResponseEntity<List<QuestionResponseDto>> getScrapList(
+            @AuthenticationPrincipal MemberPrincipal memberPrincipal,
+            @PageableDefault(size = 100, direction = Direction.DESC, sort = "id")
+            Pageable pageable) {
         Page<AiSummaryContent> aiSummaryContents = scrapService.findScrapContentList(pageable,
                 memberPrincipal.getMember());
         List<QuestionResponseDto> responseDtoList = scrapService.changeToQuestionReponseList(aiSummaryContents);

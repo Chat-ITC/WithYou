@@ -20,9 +20,9 @@ public class CommentController {
     private final PostService postService;
 
     @PostMapping("/comment/regist/{id}")
-    public ResponseEntity<?> registComment(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
-                                           @RequestBody CommentRegistDto commentRegistDto,
-                                           @PathVariable Long id) {
+    public ResponseEntity<CommentRegistDto> registComment(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
+                                                          @RequestBody CommentRegistDto commentRegistDto,
+                                                          @PathVariable Long id) {
         Post post = postService.findPostAndVerifyMember(id, memberPrincipal.getMember());
         commentService.registComment(post, commentRegistDto, memberPrincipal.getMember());
         return ResponseEntity.ok()
