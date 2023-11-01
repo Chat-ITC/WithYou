@@ -32,7 +32,7 @@ public class MemberController {
     @GetMapping("/member/mypage")
     public ResponseEntity<MemberMyPageDto> myPage(
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        MemberMyPageDto memberInfo = memberService.checkMemberInfo(memberPrincipal.getMember());
+        MemberMyPageDto memberInfo = memberService.changeMemberToDto(memberPrincipal.getMember());
         return ResponseEntity.ok()
                 .body(memberInfo);
     }
