@@ -84,24 +84,28 @@ public class PostService {
     }
 
     private String setImageName(MultipartFile multipartFile) {
-        if (multipartFile.isEmpty()) {
-            return UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
-
-        } else {
+        if (multipartFile == null || multipartFile.isEmpty()) {
             return "nothing";
+        } else {
+            return UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
         }
     }
 
-    public ByteArrayResource getImageUrl(String imageUrl) throws IOException {
-        S3ObjectInputStream inputStream = getImageUrlFromAmazonS3(imageUrl);
-        byte[] imageBytes = IOUtils.toByteArray(inputStream);
-        ByteArrayResource resource = new ByteArrayResource(imageBytes);
-        return resource;
+    public ByteArrayResource getImageUrlResource(String imageUrl) throws IOException {
+        if ("nothing".equals(imageUrl)) {
+            return new ByteArrayResource(new byte[0]);
+        }
+        return getImageUrl(imageUrl);
     }
 
-    private S3ObjectInputStream getImageUrlFromAmazonS3(String imageUrl) {
+    public ByteArrayResource getImageUrl(String imageUrl) throws IOException {
+        S3ObjectInputStream inputStream = getImageFromAmazonS3(imageUrl);
+        byte[] imageBytes = IOUtils.toByteArray(inputStream);
+        return new ByteArrayResource(imageBytes);
+    }
+
+    private S3ObjectInputStream getImageFromAmazonS3(String imageUrl) {
         S3Object s3Object = amazonS3.getObject(bucket, imageUrl);
-        S3ObjectInputStream inputStream = s3Object.getObjectContent();
-        return inputStream;
+        return s3Object.getObjectContent();
     }
 }

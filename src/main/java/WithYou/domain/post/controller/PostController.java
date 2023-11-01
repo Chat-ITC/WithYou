@@ -57,12 +57,14 @@ public class PostController {
     public ResponseEntity<?> findPostById(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
                                           @RequestParam("id") Long id) throws IOException {
         Post post = postService.findPostAndVerifyMember(id, memberPrincipal.getMember());
+        ByteArrayResource imageUrlResource = postService.getImageUrlResource(post.getImageUrl());
+
         List<Comment> comment = commentService.findCommentByPostId(id);
         List<CommentResponseDto> commentResponseDtoList = commentService.changeCommentListToDtoList(comment);
+
         PostLookupDto postLookupDto = postService.changePostToDto(post);
-        ByteArrayResource imageUrl = postService.getImageUrl(post.getImageUrl());
         CommentPostVo commentPostVo = new CommentPostVo(commentResponseDtoList,
-                postLookupDto, imageUrl);
+                postLookupDto, imageUrlResource);
         return ResponseEntity.ok()
                 .body(commentPostVo);
     }
