@@ -17,6 +17,7 @@ public class ScrapQueryRepository {
         Scrap scrap = jpaQueryFactory
                 .selectFrom(QScrap.scrap)
                 .where(QScrap.scrap.member.eq(member).and(QScrap.scrap.postId.eq(postId)))
+                .orderBy(QScrap.scrap.id.desc())
                 .fetchOne();
 
         return Optional.ofNullable(scrap);
