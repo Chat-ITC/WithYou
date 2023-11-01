@@ -72,6 +72,7 @@ public class ScrapService {
                 .title(post.getTitle())
                 .content(post.getContent())
                 .member(member)
+                .imageUrl(post.getImageUrl())
                 .build();
     }
 

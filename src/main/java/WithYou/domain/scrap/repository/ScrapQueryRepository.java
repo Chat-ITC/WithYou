@@ -5,6 +5,7 @@ import static WithYou.domain.scrap.entity.QScrap.scrap;
 import WithYou.domain.member.entity.Member;
 import WithYou.domain.scrap.entity.QScrap;
 import WithYou.domain.scrap.entity.Scrap;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.Optional;
@@ -27,11 +28,12 @@ public class ScrapQueryRepository {
     }
 
     public List<Scrap> findScrapByMemberIdOrderByIdDESC(Member member) {
-        List<Scrap> scrapList = (List<Scrap>) jpaQueryFactory
+        JPAQuery<Scrap> scraps = jpaQueryFactory
                 .selectFrom(scrap)
                 .where(scrap.member.eq(member))
-                .orderBy(scrap.id.desc())
-                .fetchAll();
-        return scrapList;
+                .orderBy(scrap.id.desc());
+
+        return scraps.fetch(); // fetch()를 사용하여 List로 변환
     }
+
 }

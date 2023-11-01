@@ -1,11 +1,9 @@
 package WithYou.domain.scrap.dto.response;
 
 import WithYou.domain.scrap.entity.Scrap;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Getter
@@ -14,8 +12,10 @@ public class PostScrapDto {
     private String title;
     private String content;
     private LocalDateTime localDateTime;
+    private String imageUrl;
 
     public static PostScrapDto of(Scrap scrap) {
-        return new PostScrapDto(scrap.getPostId(), scrap.getTitle(), scrap.getContent(),scrap.getCreatedDate());
+        return new PostScrapDto(scrap.getPostId(), scrap.getTitle(), scrap.getContent(), scrap.getCreatedDate(),
+                scrap.getImageUrl());
     }
 }

@@ -11,5 +11,4 @@ import lombok.Getter;
 public class CommentPostVo {
     private List<CommentResponseDto> commentResponseDto;
     private PostLookupDto postLookupDto;
-    private String imageUrl;
 }

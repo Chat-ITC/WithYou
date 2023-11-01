@@ -27,6 +27,8 @@ public class Scrap extends BaseEntity {
 
     private String title;
     private String content;
+    private String imageUrl;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
