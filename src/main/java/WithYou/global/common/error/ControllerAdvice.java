@@ -9,6 +9,7 @@ import WithYou.domain.member.exception.MemberPasswordNotFoundException;
 import WithYou.domain.post.exception.DepartmentNotMatchException;
 import WithYou.domain.post.exception.PostNotFoundException;
 import WithYou.domain.scrap.exception.ContentNotFoundException;
+import WithYou.domain.scrap.exception.PostExistException;
 import WithYou.global.auth.exception.TokenDecodeException;
 import WithYou.global.auth.exception.TokenException;
 import WithYou.global.auth.exception.TokenExpiredException;
@@ -33,7 +34,8 @@ public class ControllerAdvice {
             TokenDecodeException.class,
             MemberIdDuplicatedException.class,
             MemberNickNameDulicatedException.class,
-            DepartmentNotMatchException.class
+            DepartmentNotMatchException.class,
+            PostExistException.class
     })
     public ResponseEntity<ErrorResponse> handleBadRequest(final RuntimeException e) {
         ErrorResponse errorResponse = new ErrorResponse(e.getMessage());

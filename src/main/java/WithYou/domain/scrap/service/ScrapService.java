@@ -11,8 +11,10 @@ import WithYou.domain.scrap.ScrapRepository;
 import WithYou.domain.scrap.dto.response.PostScrapDto;
 import WithYou.domain.scrap.entity.Scrap;
 import WithYou.domain.scrap.exception.ContentNotFoundException;
+import WithYou.domain.scrap.exception.PostExistException;
 import WithYou.domain.scrap.exception.PostScrapNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -83,6 +85,13 @@ public class ScrapService {
         return scrapList.stream()
                 .map(PostScrapDto::of)
                 .collect(Collectors.toList());
+    }
+
+    public void checkScrapExist(Long postId) {
+        Optional<Scrap> scrapOptional = scrapRepository.findScrapByPostId(postId);
+        if (scrapOptional.isPresent()) {
+            throw new PostExistException();
+        }
     }
 
 }
