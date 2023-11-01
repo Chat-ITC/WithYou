@@ -71,19 +71,31 @@ public class PostService {
     }
 
     public String uploadImage(MultipartFile multipartFile) throws IOException {
-        return setImageName(multipartFile);
-    }
-
-    private String setImageName(MultipartFile multipartFile) throws IOException {
         if (multipartFile == null || multipartFile.isEmpty()) {
             return "nothing";
-        } else {
-            String s3FileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentLength(multipartFile.getInputStream().available());
-
-            amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objectMetadata);
-            return amazonS3.getUrl(bucket, s3FileName).toString();
         }
+        return uploadImageToS3(multipartFile);
     }
+
+    private String uploadImageToS3(MultipartFile multipartFile) throws IOException {
+        String s3FileName = generateS3FileName(multipartFile);
+        ObjectMetadata objectMetadata = createObjectMetadata(multipartFile);
+        amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objectMetadata);
+        return getS3FileUrl(s3FileName);
+    }
+
+    private String generateS3FileName(MultipartFile multipartFile) {
+        return UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
+    }
+
+    private ObjectMetadata createObjectMetadata(MultipartFile multipartFile) throws IOException {
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(multipartFile.getInputStream().available());
+        return objectMetadata;
+    }
+
+    private String getS3FileUrl(String s3FileName) {
+        return amazonS3.getUrl(bucket, s3FileName).toString();
+    }
+
 }

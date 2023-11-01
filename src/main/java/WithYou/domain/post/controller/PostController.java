@@ -38,11 +38,8 @@ public class PostController {
                                                             @RequestParam(value = "title") String title,
                                                             @RequestParam(value = "content") String content)
             throws IOException {
-        log.info(multipartFile.toString());
         String imageUrl = postService.uploadImage(multipartFile);
-        log.info(imageUrl);
         PostRegistResponseDto responseDto = new PostRegistResponseDto(title, content, imageUrl);
-        log.info(responseDto.getImageUrl());
         postService.savePost(responseDto, memberPrincipal.getMember());
         return ResponseEntity.ok()
                 .body(responseDto);
