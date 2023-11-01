@@ -42,20 +42,19 @@ public class ChatGptService {
         String ocrResult = questionRequestDto.getOcrResult();
         String question = questionRequestDto.getQuestion();
 
-        String promptQuestion = "분야는 " + major + " 입니다. 분야가 만약 '없음'이라면 코딩 언어에 국한되지 않고 내용에 맞게 대답해주세요"
-                + "이제 다음 내용을 " + question + "이때 만약 '상관없음'이거나 질문에 대답하기 어렵다면 내용을 요약해줘. \n" + ocrResult;
-        String content = askQuestionGpt(promptQuestion);
+        String promptQuestion = major + "관련 질문이야. " + "다음 내용을 " + question +
+                "이때 만약 전공과 관련없는 내용이라면 질문에 초점을 맞춰서 대답해줘\n" + ocrResult;
+        String content = askQuestionGpt(promptQuestion, major);
 
         String promptTitle = "다음 내용에 어울리는 제목 달아줘" + content;
-        String title = askQuestionGpt(promptTitle);
+        String title = askQuestionGpt(promptTitle, major);
 
         QuestionResponseDto questionResponseDto = new QuestionResponseDto(title, content);
         return questionResponseDto;
     }
-    //주석 --> History repository가 만들어지고, History ResponseDto가 만들어지면 대체될 부분
 
-    public String askQuestionGpt(String prompt) {
-        ChatGptRequestDto chatGptRequestDto = new ChatGptRequestDto(model, prompt);
+    public String askQuestionGpt(String prompt, String major) {
+        ChatGptRequestDto chatGptRequestDto = new ChatGptRequestDto(model, prompt, major);
         RestTemplate restTemplate = new RestTemplate();
         ChatGptResponseDto response = restTemplate.postForObject(apiUrl, getHttpEntity(chatGptRequestDto),
                 ChatGptResponseDto.class);
