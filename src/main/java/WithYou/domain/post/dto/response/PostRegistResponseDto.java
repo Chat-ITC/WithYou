@@ -23,6 +23,7 @@ public class PostRegistResponseDto {
                 .userGrade(member.getGrade())
                 .userMajor(member.getMajor())
                 .userNickName(member.getNickName())
+                .imageUrl(imageUrl)
                 .build();
     }
 
