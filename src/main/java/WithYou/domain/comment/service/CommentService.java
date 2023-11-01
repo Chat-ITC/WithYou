@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class CommentService {
     private final CommentRepository commentRepository;
-    private MemberService memberService;
+    private final MemberService memberService;
     private final PostReporitoy postReporitoy;
 
     public void registComment(Post post, CommentRegistDto commentRegistDto, Member member) {
