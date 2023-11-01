@@ -23,6 +23,7 @@ public class AiQueryRepository {
     public Page<AiSummaryContent> findAiSummaryContentList(Pageable pageable, Member member) {
         JPAQuery<AiSummaryContent> query = jpaQueryFactory
                 .selectFrom(aiSummaryContent) // 별칭 설정
+                .orderBy(aiSummaryContent.id.desc())
                 .where(aiSummaryContent.member.eq(member))
                 .offset(pageable.getOffset()) // 페이지네이션 설정
                 .limit(pageable.getPageSize());
