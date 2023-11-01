@@ -2,6 +2,7 @@ package WithYou.domain.post.dto.request;
 
 import WithYou.domain.member.entity.Member;
 import WithYou.domain.post.entity.Post;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,7 @@ public class PostRegistDto {
     private String title;
     @NotBlank
     private String content;
+    @JsonSerialize
     private String imageUrl;
 
     public PostRegistDto(PostRegistDto postRegistDto, String imageUrl) {

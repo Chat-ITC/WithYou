@@ -21,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,7 +34,8 @@ public class PostController {
     @PostMapping("/post/regist")
     public ResponseEntity<PostRegistDto> registPost(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
                                                     @RequestParam(value = "image", required = false) MultipartFile multipartFile,
-                                                    @RequestBody PostRegistDto postRegistDto) throws IOException {
+                                                    @RequestParam(value = "post") PostRegistDto postRegistDto)
+            throws IOException {
         String imageUrl = postService.uploadImage(multipartFile);
         PostRegistDto postRegistDtowithImage = new PostRegistDto(postRegistDto, imageUrl);
         postService.savePost(postRegistDtowithImage, memberPrincipal.getMember());
