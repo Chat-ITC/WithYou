@@ -3,9 +3,13 @@ package WithYou.domain.post.dto.request;
 import WithYou.domain.member.entity.Member;
 import WithYou.domain.post.entity.Post;
 import javax.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class PostRegistDto {
     @NotBlank
     private String title;
@@ -14,6 +18,8 @@ public class PostRegistDto {
     private String imageUrl;
 
     public PostRegistDto(PostRegistDto postRegistDto, String imageUrl) {
+        this.content = postRegistDto.content;
+        this.title = postRegistDto.title;
         this.imageUrl = imageUrl;
     }
 
