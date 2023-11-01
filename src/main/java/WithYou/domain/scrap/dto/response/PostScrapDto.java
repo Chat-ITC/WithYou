@@ -13,10 +13,9 @@ public class PostScrapDto {
     private String content;
     private LocalDateTime localDateTime;
     private String imageUrl;
-    private int commentCount;
 
     public static PostScrapDto of(Scrap scrap) {
         return new PostScrapDto(scrap.getPostId(), scrap.getTitle(), scrap.getContent(), scrap.getCreatedDate(),
-                scrap.getImageUrl(), scrap.getCommentCount());
+                scrap.getImageUrl());
     }
 }

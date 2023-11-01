@@ -28,7 +28,6 @@ public class Scrap extends BaseEntity {
     private String title;
     private String content;
     private String imageUrl;
-    private int commentCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
