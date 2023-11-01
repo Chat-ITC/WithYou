@@ -7,12 +7,13 @@ import WithYou.domain.ai.repository.AiQueryRepository;
 import WithYou.domain.ai.repository.AiRepository;
 import WithYou.domain.member.entity.Member;
 import WithYou.domain.post.entity.Post;
-import WithYou.domain.scrap.ScrapRepository;
 import WithYou.domain.scrap.dto.response.PostScrapDto;
 import WithYou.domain.scrap.entity.Scrap;
 import WithYou.domain.scrap.exception.ContentNotFoundException;
 import WithYou.domain.scrap.exception.PostExistException;
 import WithYou.domain.scrap.exception.PostScrapNotFoundException;
+import WithYou.domain.scrap.repository.ScrapQueryRepository;
+import WithYou.domain.scrap.repository.ScrapRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,6 +31,7 @@ public class ScrapService {
     private final AiRepository aiRepository;
     private final AiQueryRepository aiQueryRepository;
     private final ScrapRepository scrapRepository;
+    private final ScrapQueryRepository scrapQueryRepository;
 
     public QuestionResponseDto scrapContent(Long id) {
         AiSummaryContent aiSummaryContent = getAiSummaryContent(id);
@@ -87,8 +89,8 @@ public class ScrapService {
                 .collect(Collectors.toList());
     }
 
-    public void checkScrapExist(Long postId) {
-        Optional<Scrap> scrapOptional = scrapRepository.findScrapByPostId(postId);
+    public void checkScrapExist(Member member, Long postId) {
+        Optional<Scrap> scrapOptional = scrapQueryRepository.findScrapByMemberIdAndVerify(member, postId);
         if (scrapOptional.isPresent()) {
             throw new PostExistException();
         }

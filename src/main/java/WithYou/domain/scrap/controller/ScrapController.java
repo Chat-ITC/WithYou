@@ -54,7 +54,7 @@ public class ScrapController {
     public ResponseEntity<?> scrapPost(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
                                        @PathVariable Long id) {
         Post post = postService.findPostById(id);
-        scrapService.checkScrapExist(post.getId());
+        scrapService.checkScrapExist(memberPrincipal.getMember(), post.getId());
         scrapService.scrapPost(post, memberPrincipal.getMember());
         return ResponseEntity.ok()
                 .body("post 스크랩 완료");
