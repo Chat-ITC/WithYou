@@ -3,9 +3,9 @@ package WithYou.domain.comment.service;
 import WithYou.domain.comment.dto.request.CommentRegistDto;
 import WithYou.domain.comment.dto.response.CommentResponseDto;
 import WithYou.domain.comment.entity.Comment;
-import WithYou.domain.comment.repository.CommentQueryRepository;
 import WithYou.domain.comment.repository.CommentRepository;
 import WithYou.domain.member.entity.Member;
+import WithYou.domain.member.service.MemberService;
 import WithYou.domain.post.entity.Post;
 import WithYou.domain.post.exception.PostNotFoundException;
 import WithYou.domain.post.repository.PostReporitoy;
@@ -20,13 +20,13 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class CommentService {
     private final CommentRepository commentRepository;
-    private final CommentQueryRepository commentQueryRepository;
+    private MemberService memberService;
     private final PostReporitoy postReporitoy;
 
     public void registComment(Post post, CommentRegistDto commentRegistDto, Member member) {
         pluscommentCount(post);
         Comment comment = commentRegistDto.of(member, post);
-        member.upgradeMemberLevel();
+        memberService.upgradeMemberLevelUp(member);
         commentRepository.save(comment);
     }
 

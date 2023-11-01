@@ -1,6 +1,7 @@
 package WithYou.domain.post.service;
 
 import WithYou.domain.member.entity.Member;
+import WithYou.domain.member.service.MemberService;
 import WithYou.domain.post.dto.request.PostRegistDto;
 import WithYou.domain.post.dto.response.PostLookupDto;
 import WithYou.domain.post.entity.Post;
@@ -18,12 +19,13 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class PostService {
+    private final MemberService memberService;
     private final PostReporitoy postReporitoy;
     private final PostQueryRepository postQueryRepository;
 
     public void savePost(PostRegistDto postRegistDto, Member member) {
         Post post = postRegistDto.toEntity(member);
-        member.upgradeMemberLevel();
+        memberService.upgradeMemberLevelUp(member);
         postReporitoy.save(post);
     }
 

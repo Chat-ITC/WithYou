@@ -6,6 +6,7 @@ import WithYou.domain.ai.entity.AiSummaryContent;
 import WithYou.domain.ai.repository.AiQueryRepository;
 import WithYou.domain.ai.repository.AiRepository;
 import WithYou.domain.member.entity.Member;
+import WithYou.domain.member.service.MemberService;
 import WithYou.domain.scrap.exception.ContentNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class AiService {
+    private final MemberService memberService;
     private final AiQueryRepository aiQueryRepository;
     private final AiRepository aiRepository;
 
@@ -28,7 +30,7 @@ public class AiService {
     @Transactional
     public void saveSummaryContent(QuestionResponseDto questionResponseDto, Member member) {
         AiSummaryContent aiSummaryContent = questionResponseDto.toEntity(member);
-        member.upgradeMemberLevel();
+        memberService.upgradeMemberLevelUp(member);
         aiRepository.save(aiSummaryContent);
     }
 

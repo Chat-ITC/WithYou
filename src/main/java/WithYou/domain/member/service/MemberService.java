@@ -57,4 +57,9 @@ public class MemberService implements UserDetailsService {
     private MemberMyPageDto changeMemberToDto(Member member) {
         return MemberMyPageDto.of(member);
     }
+
+    public void upgradeMemberLevelUp(Member member) {
+        member.upgradeMemberLevel();
+        memberRepository.save(member);
+    }
 }
