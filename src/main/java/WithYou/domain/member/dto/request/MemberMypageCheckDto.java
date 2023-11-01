@@ -13,9 +13,11 @@ public class MemberMypageCheckDto {
     @NotBlank
     private String nickName;
     @NotBlank
+    private int grade;
+    @NotBlank
     private double level;
 
     public static MemberMypageCheckDto of(Member member) {
-        return new MemberMypageCheckDto(member.getNickName(), member.getLevel());
+        return new MemberMypageCheckDto(member.getNickName(), member.getGrade(), member.getLevel());
     }
 }
