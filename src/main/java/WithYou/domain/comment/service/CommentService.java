@@ -26,6 +26,7 @@ public class CommentService {
     public void registComment(Post post, CommentRegistDto commentRegistDto, Member member) {
         pluscommentCount(post);
         Comment comment = commentRegistDto.of(member, post);
+        member.upgradeMemberLevel();
         commentRepository.save(comment);
     }
 

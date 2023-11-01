@@ -28,7 +28,7 @@ public class AiService {
     @Transactional
     public void saveSummaryContent(QuestionResponseDto questionResponseDto, Member member) {
         AiSummaryContent aiSummaryContent = questionResponseDto.toEntity(member);
-
+        member.upgradeMemberLevel();
         aiRepository.save(aiSummaryContent);
     }
 

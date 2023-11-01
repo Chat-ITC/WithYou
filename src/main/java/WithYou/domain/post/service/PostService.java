@@ -23,6 +23,7 @@ public class PostService {
 
     public void savePost(PostRegistDto postRegistDto, Member member) {
         Post post = postRegistDto.toEntity(member);
+        member.upgradeMemberLevel();
         postReporitoy.save(post);
     }
 

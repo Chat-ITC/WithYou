@@ -48,6 +48,10 @@ public class Member extends BaseEntity implements UserDetails {
         return authorities;
     }
 
+    public void upgradeMemberLevel() {
+        this.level += 0.5;
+    }
+
     @Override
     public String getPassword() {
         return userPassword;
