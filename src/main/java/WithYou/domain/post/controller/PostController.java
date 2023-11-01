@@ -46,9 +46,9 @@ public class PostController {
     }
 
     @GetMapping("/post/lookup")
-    public ResponseEntity<?> lookupPost(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
-                                        @PageableDefault(size = 100, sort = "lastModifiedDate", direction = Direction.ASC)
-                                        Pageable pageable) {
+    public ResponseEntity<List<PostLookupDto>> lookupPost(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
+                                                          @PageableDefault(size = 100, sort = "lastModifiedDate", direction = Direction.DESC)
+                                                          Pageable pageable) {
         Page<Post> posts = postService.lookupDtoList(memberPrincipal.getMember(), pageable);
         List<PostLookupDto> postLookupDtos = postService.changeToPostLookupDtoList(posts);
         return ResponseEntity.ok()
@@ -56,8 +56,8 @@ public class PostController {
     }
 
     @GetMapping("/post")
-    public ResponseEntity<?> findPostById(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
-                                          @RequestParam("id") Long id) throws IOException {
+    public ResponseEntity<CommentPostVo> findPostById(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
+                                                      @RequestParam("id") Long id) throws IOException {
         Post post = postService.findPostAndVerifyMember(id, memberPrincipal.getMember());
         String imageUrl = post.getImageUrl(); // 이미지 URL을 문자열로 가져옵니다
 
