@@ -1,10 +1,13 @@
 package WithYou.domain.post.dto.response;
 
 import WithYou.domain.member.entity.Member;
-import WithYou.domain.post.dto.request.PostRegistDto;
 import WithYou.domain.post.entity.Post;
 import javax.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@AllArgsConstructor
+@Getter
 public class PostRegistResponseDto {
     @NotBlank
     private String title;
@@ -12,11 +15,6 @@ public class PostRegistResponseDto {
     private String content;
     private String imageUrl;
 
-    public PostRegistResponseDto(PostRegistDto responseDto, String imageUrl) {
-        this.content = responseDto.getContent();
-        this.title = responseDto.getTitle();
-        this.imageUrl = imageUrl;
-    }
 
     public Post toEntity(Member member) {
         return Post.builder()

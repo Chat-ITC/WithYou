@@ -3,7 +3,6 @@ package WithYou.domain.post.controller;
 import WithYou.domain.comment.dto.response.CommentResponseDto;
 import WithYou.domain.comment.entity.Comment;
 import WithYou.domain.comment.service.CommentService;
-import WithYou.domain.post.dto.request.PostRegistDto;
 import WithYou.domain.post.dto.response.PostLookupDto;
 import WithYou.domain.post.dto.response.PostRegistResponseDto;
 import WithYou.domain.post.entity.Post;
@@ -34,10 +33,11 @@ public class PostController {
     @PostMapping("/post/regist")
     public ResponseEntity<PostRegistResponseDto> registPost(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
                                                             @RequestParam(value = "image", required = false) MultipartFile multipartFile,
-                                                            @RequestParam(value = "post") PostRegistDto postRegistDto)
+                                                            @RequestParam(value = "title") String title,
+                                                            @RequestParam(value = "content") String content)
             throws IOException {
         String imageUrl = postService.uploadImage(multipartFile);
-        PostRegistResponseDto responseDto = new PostRegistResponseDto(postRegistDto, imageUrl);
+        PostRegistResponseDto responseDto = new PostRegistResponseDto(title, content, imageUrl);
         postService.savePost(responseDto, memberPrincipal.getMember());
         return ResponseEntity.ok()
                 .body(responseDto);
