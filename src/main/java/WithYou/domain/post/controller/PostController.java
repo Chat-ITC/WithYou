@@ -59,14 +59,13 @@ public class PostController {
     public ResponseEntity<CommentPostVo> findPostById(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
                                                       @RequestParam("id") Long id) throws IOException {
         Post post = postService.findPostAndVerifyMember(id, memberPrincipal.getMember());
-        String imageUrl = post.getImageUrl(); // 이미지 URL을 문자열로 가져옵니다
 
         List<Comment> comment = commentService.findCommentByPostId(id);
         List<CommentResponseDto> commentResponseDtoList = commentService.changeCommentListToDtoList(comment);
 
         PostLookupDto postLookupDto = postService.changePostToDto(post);
         CommentPostVo commentPostVo = new CommentPostVo(commentResponseDtoList,
-                postLookupDto, imageUrl);
+                postLookupDto);
         return ResponseEntity.ok()
                 .body(commentPostVo);
     }
