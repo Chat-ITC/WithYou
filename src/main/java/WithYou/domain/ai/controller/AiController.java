@@ -41,6 +41,7 @@ public class AiController {
     public ResponseEntity<?> askQuestionToChatGpt(
             @RequestParam("imageFile") MultipartFile multipartFile,
             @RequestParam("question") String question,
+            @RequestParam("field") String field,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal
     ) throws IOException {
         File file = File.createTempFile("temp", null);
@@ -49,8 +50,7 @@ public class AiController {
         String ocrResult = ocrGeneralService.processImage(apiURL, secretKey, file.getPath());
         ocrGeneralService.checkStringExist(ocrResult);
 
-        QuestionRequestDto questionRequestDto = aiService.makeQuestionRequestDto(ocrResult, question,
-                memberPrincipal.getMember());
+        QuestionRequestDto questionRequestDto = aiService.makeQuestionRequestDto(ocrResult, question, field);
 
         QuestionResponseDto responseDto = chatGptService.askQuestion(questionRequestDto);
         aiService.saveSummaryContent(responseDto, memberPrincipal.getMember());

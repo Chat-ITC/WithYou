@@ -23,8 +23,8 @@ public class AiService {
     private final AiQueryRepository aiQueryRepository;
     private final AiRepository aiRepository;
 
-    public QuestionRequestDto makeQuestionRequestDto(String ocrResult, String question, Member member) {
-        return new QuestionRequestDto(ocrResult, question, member);
+    public QuestionRequestDto makeQuestionRequestDto(String ocrResult, String question, String field) {
+        return new QuestionRequestDto(ocrResult, question, field);
     }
 
     @Transactional

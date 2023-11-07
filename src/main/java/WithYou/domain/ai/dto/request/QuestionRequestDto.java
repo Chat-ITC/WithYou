@@ -7,11 +7,11 @@ import lombok.Getter;
 public class QuestionRequestDto {
     private String ocrResult;
     private String question;
-    private String major;
+    private String field;       // 분야 추가
 
-    public QuestionRequestDto(String ocrResult, String question, Member member) {
+    public QuestionRequestDto(String ocrResult, String question, String field) {
         this.ocrResult = ocrResult;
         this.question = question;
-        this.major = member.getMajor();
+        this.field = field;
     }
 }
