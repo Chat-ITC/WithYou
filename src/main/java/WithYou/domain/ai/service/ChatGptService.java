@@ -42,11 +42,12 @@ public class ChatGptService {
         String ocrResult = questionRequestDto.getOcrResult();
         String question = questionRequestDto.getQuestion();
 
-        String promptQuestion = major + "관련 질문이야. " + "다음 내용을 " + question +
-                "이때 만약 전공과 관련없는 내용이라면 질문에 초점을 맞춰서 대답해줘. 추가 질문은 없어\n" + ocrResult;
+        String promptQuestion = major + "관련 질문이야. " + "다음 내용을 바탕으로 " + question +
+                "만약 답을 할 수 없다면 왜 답을 할 수 없는지에 대한 이유를 설명해줘\n" + ocrResult;
+
         String content = askQuestionGpt(promptQuestion, major);
 
-        String promptTitle = "다음 내용에 어울리는 제목 단어 형식으로 짧게 만들어줘" + content;
+        String promptTitle = "다음 내용에 있는 키워드를 중점으로 간략하게 제목 만들어줘" + content;
         String title = askQuestionGpt(promptTitle, major);
 
         QuestionResponseDto questionResponseDto = new QuestionResponseDto(title, content);
