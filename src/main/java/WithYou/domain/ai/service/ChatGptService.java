@@ -42,6 +42,9 @@ public class ChatGptService {
         String ocrResult = questionRequestDto.getOcrResult();
         String question = questionRequestDto.getQuestion();
 
+        System.out.println("field = " + field);
+        System.out.println("question = " + question);
+
         String promptQuestion = field + "관련 질문이야. " + "다음 내용을 바탕으로 " + question +
                 "만약 질문에 답을 할 수 없다면 왜 답을 할 수 없는지에 대한 이유를 설명해주고 답변할 수 있는 질문의" +
                 "대체 표현을 하나 이상 알려줘\n" + ocrResult;
