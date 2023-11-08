@@ -11,7 +11,8 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://with-you-eight.vercel.app/") // 허용할 도메인(Origin)을 명시적으로 지정
+                .allowedOrigins("https://with-you-eight.vercel.app", "http://10.114.10.15:3000"
+                ,"http://192.168.0.26:3000") // 허용할 도메인(Origin)을 명시적으로 지정
                 .allowedHeaders("*")
                 .exposedHeaders("accessToken", "refreshToken", "validation")
                 .allowedMethods(
