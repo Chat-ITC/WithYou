@@ -6,8 +6,6 @@ import WithYou.domain.member.dto.response.MemberMyPageDto;
 import WithYou.domain.member.service.MemberService;
 import WithYou.global.jwt.MemberPrincipal;
 import javax.validation.Valid;
-
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,8 +21,9 @@ public class MemberController {
     private final AiService aiService;
 
     @GetMapping("/")
-    public ResponseEntity<String> rootController(){
-        return ResponseEntity.ok("연결성공");
+    public ResponseEntity<String> rootController() {
+        return ResponseEntity.ok()
+                .build();
     }
 
     @PatchMapping("/member/update")
