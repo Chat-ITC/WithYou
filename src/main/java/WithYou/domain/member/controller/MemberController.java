@@ -22,7 +22,7 @@ public class MemberController {
     private final MemberService memberService;
     private final AiService aiService;
 
-    @GetMapping("/hello")
+    @GetMapping("/")
     public ResponseEntity<String> rootController(){
         return ResponseEntity.ok("연결성공");
     }
