@@ -58,8 +58,8 @@ public class ChatGptService {
         return questionResponseDto;
     }
 
-    public String askQuestionGpt(String prompt, String major) {
-        ChatGptRequestDto chatGptRequestDto = new ChatGptRequestDto(model, prompt, major);
+    public String askQuestionGpt(String prompt, String field) {
+        ChatGptRequestDto chatGptRequestDto = new ChatGptRequestDto(model, prompt, field);
         RestTemplate restTemplate = new RestTemplate();
         ChatGptResponseDto response = restTemplate.postForObject(apiUrl, getHttpEntity(chatGptRequestDto),
                 ChatGptResponseDto.class);
