@@ -17,6 +17,7 @@ public class CommentRegistDto {
                 .userNickName(member.getNickName())
                 .userMajor(member.getMajor())
                 .userGrade(member.getGrade())
+                .userLevel(member.getLevel())
                 .post(post)
                 .build();
     }

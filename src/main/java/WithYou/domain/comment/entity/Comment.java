@@ -29,6 +29,7 @@ public class Comment extends BaseEntity {
     private String userNickName;
     private String userMajor;
     private int userGrade;
+    private double userLevel;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
