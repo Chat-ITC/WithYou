@@ -11,7 +11,6 @@ import WithYou.domain.scrap.dto.response.PostScrapDto;
 import WithYou.domain.scrap.entity.Scrap;
 import WithYou.domain.scrap.exception.ContentNotFoundException;
 import WithYou.domain.scrap.exception.PostExistException;
-import WithYou.domain.scrap.exception.PostScrapNotFoundException;
 import WithYou.domain.scrap.repository.ScrapQueryRepository;
 import WithYou.domain.scrap.repository.ScrapRepository;
 import java.util.List;
@@ -78,9 +77,6 @@ public class ScrapService {
 
     public List<Scrap> findScrapByMemberId(Member member) {
         List<Scrap> scrapList = scrapQueryRepository.findScrapByMemberIdOrderByIdDESC(member);
-        if (scrapList.isEmpty()) {
-            throw new PostScrapNotFoundException();
-        }
         return scrapList;
     }
 
