@@ -2,6 +2,7 @@ package WithYou.domain.post.entity;
 
 import WithYou.domain.comment.entity.Comment;
 import WithYou.global.common.entity.BaseEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,6 +33,7 @@ public class Post extends BaseEntity {
     private String userNickName;
     private String userMajor;
     private int userGrade;
+    private double userLevel;
     private int commentCount;
     @Column(length = 1000)
     private String imageUrl;

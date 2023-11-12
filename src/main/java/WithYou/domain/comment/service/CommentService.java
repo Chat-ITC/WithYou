@@ -6,13 +6,18 @@ import WithYou.domain.comment.entity.Comment;
 import WithYou.domain.comment.repository.CommentRepository;
 import WithYou.domain.member.entity.Member;
 import WithYou.domain.member.service.MemberService;
+import WithYou.domain.post.dto.response.PostLookupDto;
 import WithYou.domain.post.entity.Post;
 import WithYou.domain.post.exception.PostNotFoundException;
 import WithYou.domain.post.repository.PostReporitoy;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import WithYou.domain.post.vo.CommentPostVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -43,5 +48,12 @@ public class CommentService {
 
     private void pluscommentCount(Post post) {
         post.plusCommentCount();
+    }
+
+    public CommentPostVo createResponseDto(Post post) {
+        PostLookupDto lookupDto = PostLookupDto.of(post);
+        List<CommentResponseDto> commentResponseDtos = changeCommentListToDtoList(post.getCommentList());
+        CommentPostVo commentPostVo = new CommentPostVo(commentResponseDtos, lookupDto);
+        return commentPostVo;
     }
 }

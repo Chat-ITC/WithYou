@@ -45,21 +45,19 @@ public class ChatGptService {
         System.out.println("field = " + field);
         System.out.println("question = " + question);
 
-        String promptQuestion = field + "관련 질문이야. " + "다음 내용을 바탕으로 " + question +
-                "만약 질문에 답을 할 수 없다면 왜 답을 할 수 없는지에 대한 이유를 설명해주고 답변할 수 있는 질문의" +
-                "대체 표현을 하나 이상 알려줘\n" + ocrResult;
+        String promptQuestion = field + "관련 질문이야. " + "다음 내용을 바탕으로 " + question + ocrResult;
 
         String content = askQuestionGpt(promptQuestion, field);
 
-        String promptTitle = "다음 내용에 있는 키워드를 중점으로 간략하게 제목 만들어줘" + content;
+        String promptTitle = "다음 내용에 있는 키워드를 중점으로 10글자 이내로 제목 한 개만 만들어줘" + content;
         String title = askQuestionGpt(promptTitle, field);
 
         QuestionResponseDto questionResponseDto = new QuestionResponseDto(title, content);
         return questionResponseDto;
     }
 
-    public String askQuestionGpt(String prompt, String major) {
-        ChatGptRequestDto chatGptRequestDto = new ChatGptRequestDto(model, prompt, major);
+    public String askQuestionGpt(String prompt, String field) {
+        ChatGptRequestDto chatGptRequestDto = new ChatGptRequestDto(model, prompt, field);
         RestTemplate restTemplate = new RestTemplate();
         ChatGptResponseDto response = restTemplate.postForObject(apiUrl, getHttpEntity(chatGptRequestDto),
                 ChatGptResponseDto.class);
